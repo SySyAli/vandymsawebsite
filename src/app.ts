@@ -3,6 +3,7 @@ import express, { Express } from "express"
 import cors from "cors"
 import routes from "./routes"
 import bodyparser from "body-parser"
+
 const app: Express = express();
 
 const PORT: string | number = process.env.PORT || 4000
