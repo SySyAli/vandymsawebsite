@@ -9,13 +9,10 @@ const app: Express = express();
 const PORT: string | number = process.env.PORT || 4000
 
 
-console.log("Hello World")
 app.use(express.json())
-app.use(bodyparser)
 app.use(cors())
 app.use(routes)
 
-console.log("Hello World2")
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
