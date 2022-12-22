@@ -12,5 +12,8 @@ export interface PrayerTime extends Document{
     firstJummahTime: string,
     secondJummahTime: string,
     maghribDelay: string,
-    jummahUpdate: string
+    jummahUpdate: string,
+    latitude: number,
+    longitude: number,
+    method: number
 }

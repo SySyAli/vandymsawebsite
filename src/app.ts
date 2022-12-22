@@ -1,5 +1,5 @@
 import express, { Express } from "express"
-//import mongoose from "mongoose"
+import mongoose from "mongoose"
 import cors from "cors"
 import routes from "./routes"
 import bodyparser from "body-parser"
@@ -13,12 +13,13 @@ app.use(express.json())
 app.use(cors())
 app.use(routes)
 
-
-app.listen(PORT, () =>
-  console.log(`Server is running on http://localhost:${PORT}`)
-)
-
 /*
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`)
+)
+*/
+
+mongoose.set('strictQuery', true)
 mongoose.connect('mongodb://localhost:27017/admin').then(() =>
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
@@ -28,5 +29,5 @@ app.listen(PORT, () =>
 throw error
 })
 
-*/
+
 
