@@ -1,5 +1,5 @@
 import express from "express"
-import getPrayerTimes from "./../controllers/prayertimes"
+import getPrayerTimes from "./../controllers/prayertimesjummahupdate"
 
 const router = express.Router();
 

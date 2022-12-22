@@ -20,7 +20,6 @@ async function getTodayPrayerTime(req: Request, res: Response){
             "maghribDelay": req.query.delay
         }
 
-        console.log(parameters.maghribDelay)
 
         var errorString: string = ""
         if(parameters.latitude === undefined){
@@ -53,15 +52,6 @@ async function getTodayPrayerTime(req: Request, res: Response){
             currentTimeStamp = date.getHours() + ":" + date.getMinutes()
         }
 
-        var mDelay:string
-        if(Number(parameters.maghribDelay) < 10){
-            mDelay = "00:0" + parameters.maghribDelay + ":00"
-        } else{
-            mDelay = "00:" + parameters.maghribDelay + ":00"
-        }
-
-        //console.log("Mdelay: " + mDelay)
-        //console.log("Hello World")
         // East Coast time
         
         //console.log(convertTo12HRTime(currentTimeStamp) + ", "+ findCurrentSalah(currentTimeStamp, prayerTimes24hrs))
@@ -86,9 +76,9 @@ async function getTodayPrayerTime(req: Request, res: Response){
                                 "maghrib": convertTo12HRTime(prayerTimes24hrs.maghrib), 
                                 "isha": convertTo12HRTime(prayerTimes24hrs.isha)}
        
-
+        
         res.status(201).json({
-        "iqammahTimes": {"fajr": "NA", "sunrise": "NA","zuhr":"1:15PM", "asr": "3:05PM", "maghrib": addingMinutes(removeCST(currTime.timings.Maghrib) +":00", mDelay), "isha":"7:00PM", "firstJummah": "12:15PM", "secondJummah": "1:15PM"}, 
+        "iqammahTimes": {"fajr": "NA", "sunrise": "NA","zuhr":"1:15PM", "asr": "3:05PM", "maghrib": addingMinutes(removeCST(prayerTimes24hrs.maghrib) +":00", Number(parameters.maghribDelay)), "isha":"7:00PM", "firstJummah": "12:15PM", "secondJummah": "1:15PM"}, 
         "prayerTimes":{"fajr": prayerTimes12hrs.fajr, "sunrise": prayerTimes12hrs.sunrise,"zuhr": prayerTimes12hrs.zuhr, "asr": prayerTimes12hrs.asr, "maghrib": prayerTimes12hrs.maghrib, "isha": prayerTimes12hrs.isha, "firstJummah": "12:20PM", "secondJummah": "1:20PM"},
         "IslamicDate": {"day": currTime.date.hijri.day, "month":changeMonthName(currTime.date.hijri.month.number), "year":currTime.date.hijri.year}, 
         "timezone":currTime.meta.timezone, 
@@ -134,20 +124,26 @@ function convertTo12HRTime(time:string){
 
 }
 
-function addingMinutes(time:string, minutes:string){
+function addingMinutes(time:string, minutes:number){
 
-    var timeToAddArr = minutes.split(":");             
-    var ms = (60 * 60 * parseInt(timeToAddArr[0]) + 60 * (parseInt(timeToAddArr[1])) ) * 1000;
-  
-    var newTime =new Date('1970-01-01T' + time).getTime() + ms
+    var newTime =new Date('1970-01-01 ' + time)
+
+    newTime.setMinutes(newTime.getMinutes() +minutes)
     
-    var finalTime = new Date(newTime)
 
-    if(finalTime.getMinutes() < 10){
-        convertTo12HRTime(finalTime.getHours() + ":0" + finalTime.getMinutes() + ":00")
+    var hours = newTime.getHours()
+    
+    const AMorPM = hours >= 12 ? 'PM' : 'AM'
+   
+    
+    hours = (hours % 12) || 12
+
+    if(newTime.getMinutes() < 10){
+        return hours + ":0" + newTime.getMinutes() + "" + AMorPM
     } else{
-        convertTo12HRTime(finalTime.getHours() + ":" + finalTime.getMinutes() + ":00")
+        return hours + ":" + newTime.getMinutes() + "" + AMorPM
     }
+
 
 }
 
