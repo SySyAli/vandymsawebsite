@@ -100,7 +100,7 @@ async function getTodayPrayerTime(req: Request, res: Response){
             "maghribDelay": req.query.maghribDelay
         }
 
-        var errorString: string = ""
+        let errorString = ""
         if(parameters.latitude === undefined){
             errorString += 'Latitude is undefined. '
         } 
@@ -129,7 +129,7 @@ async function getTodayPrayerTime(req: Request, res: Response){
                                 "maghrib": removeCST(currTime.timings.Maghrib) +":00", 
                                 "isha": removeCST(currTime.timings.Isha) + ":00"}
         
-        var currentTimeStamp:string
+        let currentTimeStamp:string
         if(date.getHours() < 10){
             currentTimeStamp = "0" + date.getHours()
         } else{
@@ -183,7 +183,7 @@ async function getTodayPrayerTime(req: Request, res: Response){
 
 
 function removeCST(t1: string){
-    var position: number = t1.indexOf(' ')
+    const position: number = t1.indexOf(' ')
     if(position === -1){
         return t1;
     } else{
@@ -193,16 +193,19 @@ function removeCST(t1: string){
 }
 
 function convertTo12HRTime(time:string){
-    var newTime = new Date('1970-01-01T' + time )
+    const newTime = new Date('1970-01-01T' + time )
 
-    var hours = newTime.getHours()
+    let hours = newTime.getHours()
     
     const AMorPM = hours >= 12 ? 'PM' : 'AM'
    
-    
-    hours = (hours % 12) || 12
+    if(hours % 12 == 0){
+        hours = 12
+    }  else{
+        hours = hours % 12
+    }
 
-    var returnString:string
+    let returnString:string
 
     if(newTime.getHours() < 10){
         returnString =  "0" + hours
@@ -223,15 +226,19 @@ function convertTo12HRTime(time:string){
 // FINICKY METHOD
 function addingMinutes(time:string, minutes:number){
 
-    var newTime =new Date('1970-01-01 ' + time)
+    const newTime =new Date('1970-01-01 ' + time)
     newTime.setMinutes(newTime.getMinutes() + minutes)
 
 
-    var hours = newTime.getHours()
+    let hours = newTime.getHours()
     
     const AMorPM = hours >= 12 ? 'PM' : 'AM'
     
-    hours = (hours % 12) || 12
+    if(hours % 12 == 0){
+        hours = 12
+    }  else{
+        hours = hours % 12
+    }
 
     if(newTime.getMinutes() < 10){
         return hours + ":0" + newTime.getMinutes() + "" + AMorPM
@@ -244,7 +251,7 @@ function addingMinutes(time:string, minutes:number){
 
 function findCurrentSalah(currentTime:string, prayerTimes:any){
     // make a bunch date objs until i find the first that it is bigger
-    var newTime = new Date('1970-01-01T' + currentTime)
+    const newTime = new Date('1970-01-01T' + currentTime)
     if(newTime < new Date('1970-01-01T' + prayerTimes.fajr) || newTime > new Date('1970-01-01T' + prayerTimes.isha)){
         return "isha"
     } else if(newTime < new Date('1970-01-01T' + prayerTimes.sunrise)){

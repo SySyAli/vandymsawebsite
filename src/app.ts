@@ -2,10 +2,11 @@ import express, { Express } from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import routes from "./routes"
-import bodyparser from "body-parser"
+
 
 const app: Express = express();
 
+// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 const PORT: string | number = process.env.PORT || 4000
 
 
