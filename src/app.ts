@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv' 
+dotenv.config()
 import express, { Express } from "express"
 import mongoose from "mongoose"
 import cors from "cors"
@@ -29,6 +31,4 @@ app.listen(PORT, () =>
 .catch(error => {
 throw error
 })
-
-
 

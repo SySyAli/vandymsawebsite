@@ -1,7 +1,14 @@
 import express from "express"
 import {getUserTimesAndUpdate, addUserTimesAndUpdate, updateIqamahTime, deleteIqamahTime, getTodayPrayerTime} from "./../controllers/prayertimesjummahupdate"
 import { getVandyHalalFood, getHalalRestaurants, addHalalRestaurant, updateHalalRestaurant, deleteHalalRestaurant } from "../controllers/food";
+import { getCalendarEvents } from "../controllers/calendar";
 const router = express.Router();
+
+
+// Calendar Routes
+
+router.get("/getMSAEvents", getCalendarEvents)
+
 
 // food routes
 router.get("/getHalalFood", getVandyHalalFood)
