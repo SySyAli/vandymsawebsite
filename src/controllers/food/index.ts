@@ -103,7 +103,7 @@ async function updateHalalRestaurant(req: Request, res: Response){
         const updated: halalRestaurant | null = await HalalRestaurants.findByIdAndUpdate({_id: body.id}, {$set: body.body})
         const all: halalRestaurant[] = await HalalRestaurants.find()
 
-        res.status(200).json({"message":"Halal Resturant successfully updated", "Updated Restaurant": updated, "All Resturants": all})
+        res.status(200).json({"message":"Halal Restaurant successfully updated", "Updated Restaurant": updated, "All Restaurants": all})
 
     } catch (error) {
         console.log(error)

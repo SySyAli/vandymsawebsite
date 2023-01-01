@@ -1,8 +1,28 @@
 /* eslint-disable no-undef */
+import cloudinary from "cloudinary"
+import isImage from "is-image"
+
+
+
+
+console.log(isImage('https://www.denofgeek.com/wp-content/uploads/2022/06/Berserk.jpg'))
+
+
+
+
+
+
+/*
 import axios from "axios"
 
 let date = new Date()
-
+cloudinary.v2.config({
+    cloud_name: "",
+    api_key: "",
+    api_secret: "",
+  })
+  cloudinary.v2.uploader.upload("https://www.denofgeek.com/wp-content/uploads/2022/06/Berserk.jpg?fit=1200%2C675")
+  .then(result=> console.log(result));
 // GETS AVIABLE MENU CODES FOR THE DAY
 // WORKING CODE BUT MESSY
 
@@ -238,3 +258,4 @@ for(let i = 1; i < 21; ++i){
 
 console.log(menuCodesForToday)
 
+ */
