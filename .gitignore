@@ -1,6 +1,6 @@
-/src/controllers/food/testing
 node_modules
 dist
 msadummycal-102f8513d37c.json
 .env
 credentials.json
+testing

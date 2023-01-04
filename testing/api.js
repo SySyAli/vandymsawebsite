@@ -1,38 +1,11 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-undef */
-import cloudinary from "cloudinary"
-import isImage from "is-image"
-
-console.log("hello world")
-
-
-cloudinary.v2.config({
-    cloud_name: "dwbmb9pvb",
-    api_key: "926271216679985",
-    api_secret: "K7IQdu142E1qRlx8upERN1fDC9k",
-  })
-  cloudinary.v2.uploader.upload("https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf")
-  .then(result=> console.log(result));
-
-
-
-/*
 import axios from "axios"
 
-let date = new Date()
-cloudinary.v2.config({
-    cloud_name: "",
-    api_key: "",
-    api_secret: "",
-  })
-  cloudinary.v2.uploader.upload("https://www.denofgeek.com/wp-content/uploads/2022/06/Berserk.jpg?fit=1200%2C675")
-  .then(result=> console.log(result));
-// GETS AVIABLE MENU CODES FOR THE DAY
-// WORKING CODE BUT MESSY
 
-
+async function giveMenuCode(req, res){
+try {
+    
 // JUST USE THE #, YEAR
-
+let date = new Date()
 let menuCodesForToday = [
     {name: "Rand Dining Center",
     breakfast: null,
@@ -169,13 +142,11 @@ for(let i = 1; i < 21; ++i){
       await axios.request(options).then(function (response) {
         let htmlString = response.data.panels[3].html.toString()
         if(htmlString.indexOf(menuCodesForToday[i-1].name) === -1){
-            // eslint-disable-next-line no-undef
-            console.log(i + ": this did not work")
             menuCodesForToday[i-1].breakfast = "NA"
             menuCodesForToday[i-1].lunch = "NA"
             menuCodesForToday[i-1].dinner = "NA"
             menuCodesForToday[i-1].dailyofferings = "NA"
-            menuCodesForToday[i-1].hasMenuCodes = "FALSE"
+            menuCodesForToday[i-1].hasMenuCodes = "ERROR"
         } else{
             htmlString = htmlString.substring(htmlString.indexOf(menuCodesForToday[i-1].name) + menuCodesForToday[i-1].name.length)
             
@@ -186,11 +157,10 @@ for(let i = 1; i < 21; ++i){
                 menuCodesForToday[i-1].dailyofferings = "NA"
                 menuCodesForToday[i-1].hasMenuCodes = "FALSE"
             } else{
-                // TODOadd to zeppos
-
                 //console.log(i+ htmlString)
                 // make sure the current day is valid
                 let checkString = date.getUTCDate() + ", " + date.getFullYear()
+                // switch back to check string
                 if(htmlString.indexOf(checkString) === -1){
                     menuCodesForToday[i-1].breakfast = "NA"
                     menuCodesForToday[i-1].lunch = "NA"
@@ -251,15 +221,17 @@ for(let i = 1; i < 21; ++i){
         }
 
       }).catch(function (error) {
-        // eslint-disable-next-line no-undef
         console.error(error);
       });
 }
+    return menuCodesForToday
+} catch (error) {
+    console.log(error)
+    throw error
+}
+}
 
 
+console.log(await giveMenuCode())
 
-
-
-console.log(menuCodesForToday)
-
- */
+ 

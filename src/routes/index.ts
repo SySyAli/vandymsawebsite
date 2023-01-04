@@ -5,8 +5,11 @@ import { getCalendarEvents } from "../controllers/calendar";
 import { getPictures, addPicture, updatePicture, deletePicture } from "../controllers/pictures";
 import {getNewsletters, addNewsletter, updateNewsletter, deleteNewsletter} from "../controllers/newsletter"
 import { getInstagramPosts } from "../controllers/instagram";
+import { giveMenuCode } from "../controllers/vandyHalalFood";
 const router = express.Router();
 
+
+router.get("/getMenuCodes", giveMenuCode)
 // Instagram Posts
 router.get("/getInstagramPosts", getInstagramPosts)
 

@@ -18,5 +18,5 @@
             }
         ]
     },
-    "ignorePatterns": ["src/**/*.test.ts","src/types", "src/frontend/generated/*"]
+    "ignorePatterns": ["src/**/*.test.ts","src/types", "testing", "src/frontend/generated/*"]
 }
