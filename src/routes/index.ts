@@ -3,9 +3,18 @@ import {getUserTimesAndUpdate, addUserTimesAndUpdate, updateIqamahTime, deleteIq
 import { getVandyHalalFood, getHalalRestaurants, addHalalRestaurant, updateHalalRestaurant, deleteHalalRestaurant } from "../controllers/food";
 import { getCalendarEvents } from "../controllers/calendar";
 import { getPictures, addPicture, updatePicture, deletePicture } from "../controllers/pictures";
+import {getNewsletters, addNewsletter, updateNewsletter, deleteNewsletter} from "../controllers/newsletter"
+import { getInstagramPosts } from "../controllers/instagram";
 const router = express.Router();
 
 // Instagram Posts
+router.get("/getInstagramPosts", getInstagramPosts)
+
+// Newsletter Routes
+router.get("/getNewsletters", getNewsletters)
+router.post("/addNewsletter", addNewsletter)
+router.put("/updateNewsletter/:id", updateNewsletter)
+router.delete("/deleteNewsletter/:id", deleteNewsletter)
 
 // Picture Routes
 router.get("/getPictures", getPictures)

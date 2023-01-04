@@ -1,14 +1,18 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable no-undef */
 import cloudinary from "cloudinary"
 import isImage from "is-image"
 
+console.log("hello world")
 
 
-
-console.log(isImage('https://www.denofgeek.com/wp-content/uploads/2022/06/Berserk.jpg'))
-
-
-
+cloudinary.v2.config({
+    cloud_name: "dwbmb9pvb",
+    api_key: "926271216679985",
+    api_secret: "K7IQdu142E1qRlx8upERN1fDC9k",
+  })
+  cloudinary.v2.uploader.upload("https://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf")
+  .then(result=> console.log(result));
 
 
 
