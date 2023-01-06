@@ -21,6 +21,29 @@ const calendar = google.calendar({
 });
 
 
+async function getSingleEvent(req: Request, res: Response){
+  try {
+    calendar.events.get({
+      calendarId: GOOGLE_CALENDAR_ID,
+      eventId: req.params.id
+    }, (error, result) => {
+      if (error) {
+        res.send(JSON.stringify({ error: error }));
+      } else {
+          if(result != undefined){
+            res.status(200).json({ message: 'Event found successfully.', event: result.data })
+          } else{
+            res.status(200).json({ message: 'API undefined', event: result })
+          }
+      }
+    })
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
+
 // get events and them in a json form using google calendar api
 async function getCalendarEvents(req: Request, res: Response){
     try {
@@ -37,7 +60,7 @@ async function getCalendarEvents(req: Request, res: Response){
               if (result != null && result.data.items != null && result.data.items.length != null && result.data.items.length) {
                 res.send(JSON.stringify({ message: 'Events sent successfully!', events: result.data.items }))
               } else {
-                res.send(JSON.stringify({ message: 'No upcoming events found.' }))
+                res.send(JSON.stringify({ message: 'No upcoming events found.', events:[] }))
               }
             }
           });
@@ -49,5 +72,5 @@ async function getCalendarEvents(req: Request, res: Response){
 }
 
 
-export {getCalendarEvents}
+export {getCalendarEvents, getSingleEvent}
 

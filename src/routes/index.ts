@@ -1,7 +1,7 @@
 import express from "express"
 import {getUserTimesAndUpdate, addUserTimesAndUpdate, updateIqamahTime, deleteIqamahTime, getTodayPrayerTime} from "./../controllers/prayertimesjummahupdate"
 import { getVandyHalalFood, getHalalRestaurants, addHalalRestaurant, updateHalalRestaurant, deleteHalalRestaurant } from "../controllers/food";
-import { getCalendarEvents } from "../controllers/calendar";
+import { getCalendarEvents, getSingleEvent } from "../controllers/calendar";
 import { getPictures, addPicture, updatePicture, deletePicture } from "../controllers/pictures";
 import {getNewsletters, addNewsletter, updateNewsletter, deleteNewsletter} from "../controllers/newsletter"
 import { getInstagramPosts } from "../controllers/instagram";
@@ -27,6 +27,7 @@ router.delete("/deletePicture/:id", deletePicture)
 
 // Calendar Routes
 router.get("/getMSAEvents", getCalendarEvents)
+router.get("/getSingleEvent/:id", getSingleEvent)
 
 // food routes
 router.get("/getHalalFood", getVandyHalalFood)
