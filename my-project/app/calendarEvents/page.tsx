@@ -1,7 +1,6 @@
-import Link from "next/link";
-import { Calendar } from "@fullcalendar/core";
-import googleCalendarPlugin from "@fullcalendar/google-calendar";
-import dayGridPlugin from "@fullcalendar/daygrid";
+import Link from "next/link"
+
+
 
 async function getEvents() {
   const url = "http://localhost:4000";
@@ -12,20 +11,7 @@ async function getEvents() {
 
 export default async function EventsPage() {
   const events = await getEvents();
-  /*
-  const calendarEl = document.getElementById("calendar");
-  if (calendarEl != null) {
-    console.log("Hello World");
-    const calendar = new Calendar(calendarEl, {
-      plugins: [googleCalendarPlugin, dayGridPlugin],
-      initialView: "dayGridMonth",
-      events: {
-        googleCalendarId: process.env.GOOGLE_CALENDAR_ID,
-      },
-    });
-    calendar.render();
-  }
-  */
+
  // EMBED GOOGLE CALENDAR
   return (
     <div>
@@ -34,17 +20,13 @@ export default async function EventsPage() {
       {events.events.map((event: any) => {
         return <Event key={event.id} event={event} />;
       })}
-      <div id="calendar">
-        <iframe src="https://calendar.google.com/calendar/embed?src=450aab6d097f2c6d66ff4698d517c985681a9ed895c21140f005a6c80800760c%40group.calendar.google.com&ctz=America%2FNew_York" 
-         width="800" height="600" ></iframe>
-
-      </div>
+      <iframe className = "calendar" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FChicago&src=NDUwYWFiNmQwOTdmMmM2ZDY2ZmY0Njk4ZDUxN2M5ODU2ODFhOWVkODk1YzIxMTQwZjAwNWE2YzgwODAwNzYwY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23009688&output=embed" width={1000} height={500} ></iframe>
+      
     </div>
   );
 }
 
-function Event({ event }: any) {
-  // need the following properties
+// need the following properties
   /*
 			"id": "", DONE
 			"summary": "", DONE
@@ -59,6 +41,9 @@ function Event({ event }: any) {
 				"timeZone": ""
 			}
     */
+
+function Event({ event }: any) {
+  
   return (
     <Link href={`/calendarEvents/${event.id}`}>
       <div>
