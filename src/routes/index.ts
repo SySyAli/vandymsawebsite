@@ -9,7 +9,7 @@ import { giveMenuCode } from "../controllers/vandyHalalFood";
 const router = express.Router();
 
 
-router.get("/getMenuCodes", giveMenuCode)
+
 // Instagram Posts
 router.get("/getInstagramPosts", getInstagramPosts)
 
@@ -31,6 +31,7 @@ router.get("/getSingleEvent/:id", getSingleEvent)
 
 // food routes
 router.get("/getHalalFood", getVandyHalalFood)
+router.get("/getMenuCodes", giveMenuCode)
 
 // CRUD operations for Halal Restaurants
 router.get("/getHalalRestaurants", getHalalRestaurants)

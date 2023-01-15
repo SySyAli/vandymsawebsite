@@ -1,10 +1,10 @@
 import axios from "axios"
 
 
-async function giveMenuCode(req, res){
+async function giveMenuCode(){
 try {
     
-// JUST USE THE #, YEAR
+// JUST USE THE #, YEAR 
 let date = new Date()
 let menuCodesForToday = [
     {name: "Rand Dining Center",

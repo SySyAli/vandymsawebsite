@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 ///../../public/msaLogo.jpeg
 
 export default function Navbar() {
@@ -45,7 +44,7 @@ export default function Navbar() {
                   <Link href="/"> Newsletter </Link>
                 </li>
                 <li>
-                  <Link href="/"> Recent Events </Link>
+                  <Link href="/recentEvents"> Recent Events </Link>
                 </li>
                 <li>
                   <Link href="/"> Pictures </Link>
