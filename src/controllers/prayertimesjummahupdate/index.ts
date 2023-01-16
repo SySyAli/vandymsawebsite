@@ -7,6 +7,7 @@ import PrayerTimes from "../../models/prayertimeupdate"
 
 async function getUserTimesAndUpdate(req: Request, res: Response){
     try{
+        //const prayerTimes = await getTodayPrayerTime()
         const times: PrayerTime[] = await PrayerTimes.find()
         res.status(200).json(times)
     } catch (err){
@@ -88,35 +89,19 @@ async function getTodayPrayerTime(req: Request, res: Response){
         // TO DO
         // Maybe store jummah and iqamah times in front end
         // Store query parameters in front end
-
+        const times: PrayerTime[] = await PrayerTimes.find()
         const date = new Date()
         // Annex Coordinates: (36.14479431053963, -86.80420024114342)
-        const parameters = {
-            "latitude": req.query.latitude,
-            "longitude": req.query.longitude,
-            "method": req.query.method,
+        const parameters = await {
+            "latitude": times[0].latitude,
+            "longitude": times[0].longitude,
+            "method": times[0].method,
             "month":date.getMonth()+1,
             "year": date.getFullYear(),
-            "maghribDelay": req.query.maghribDelay
+            "maghribDelay": times[0].maghribDelay
         }
-
-        let errorString = ""
-        if(parameters.latitude === undefined){
-            errorString += 'Latitude is undefined. '
-        } 
-        if (parameters.longitude === undefined){
-            errorString += 'Longitude is undefined. '
-        }
-        if (parameters.method === undefined){
-            errorString += 'Method is undefined. '
-        } 
-        if(parameters.maghribDelay === undefined){
-            errorString += 'Method is undefined. '
-        } 
-        if(parameters.latitude === undefined || parameters.longitude === undefined || parameters.method === undefined){
-            console.log(errorString)
-            throw errorString
-        }
+        //console.log(date.toString())
+        
 
         const data = await axois.get(`http://api.aladhan.com/v1/calendar?latitude=${parameters.latitude}&longitude=${parameters.longitude}&method=${parameters.method}&month=${parameters.month}&year=${parameters.year}`)
         const currTime = await data.data.data[date.getDate()-1]
@@ -140,7 +125,7 @@ async function getTodayPrayerTime(req: Request, res: Response){
         } else{
             currentTimeStamp += ":" + date.getMinutes()
         }
-
+        //console.log(date.getHours())
         // East Coast time
         
         //console.log(convertTo12HRTime(currentTimeStamp) + ", "+ findCurrentSalah(currentTimeStamp, prayerTimes24hrs))
@@ -170,10 +155,10 @@ async function getTodayPrayerTime(req: Request, res: Response){
         "prayerTimes":{"fajr": prayerTimes12hrs.fajr, "sunrise": prayerTimes12hrs.sunrise,"zuhr": prayerTimes12hrs.zuhr, "asr": prayerTimes12hrs.asr, "maghrib": prayerTimes12hrs.maghrib, "isha": prayerTimes12hrs.isha},
         "IslamicDate": {"day": currTime.date.hijri.day, "month":changeMonthName(currTime.date.hijri.month.number), "year":currTime.date.hijri.year}, 
         "timezone":currTime.meta.timezone, 
-        "currentTime": Date.now(),
-        "currentTimeStamp": convertTo12HRTime(currentTimeStamp),
+        "currentTimeStamp": convertTo12HRTime(currentTimeStamp) + ", "+ (date.getMonth()+1)+ "/" + date.getDate()+"/" + date.getFullYear(),
         "currentPrayer": findCurrentSalah(currentTimeStamp, prayerTimes24hrs),
         "currentDay": date.getDay(),
+        "iqammahTimes": await times[0]
     })
     } catch(err){
         console.log(err)
@@ -250,6 +235,8 @@ function addingMinutes(time:string, minutes:number){
 }
 
 function findCurrentSalah(currentTime:string, prayerTimes:any){
+    //console.log(currentTime)
+    //console.log(prayerTimes)
     // make a bunch date objs until i find the first that it is bigger
     const newTime = new Date('1970-01-01T' + currentTime)
     if(newTime < new Date('1970-01-01T' + prayerTimes.fajr) || newTime > new Date('1970-01-01T' + prayerTimes.isha)){

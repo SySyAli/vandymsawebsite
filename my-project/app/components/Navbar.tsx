@@ -24,34 +24,12 @@ export default function Navbar() {
               <Link href="/">About Us</Link>
             </li>
             <li>
-              <Link href="/calendarEvents"> Events </Link>
+              <Link href="/calendarEvents"> Future Events </Link>
             </li>
             <li>
-              <a>
-                Multimedia
-                <svg
-                  className="fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                </svg>
-              </a>
-              <ul className="p-2 bg-base-100">
-                <li>
-                  <Link href="/"> Newsletter </Link>
-                </li>
-                <li>
-                  <Link href="/recentEvents"> Recent Events </Link>
-                </li>
-                <li>
-                  <Link href="/"> Pictures </Link>
-                </li>
-              </ul>
+              <Link href="/recentEvents"> Recent Events </Link>
             </li>
-            <li>
+            <li className="z-[999]">
               <a>
                 Forms
                 <svg
@@ -76,7 +54,7 @@ export default function Navbar() {
                 </li>
               </ul>
             </li>
-            <li>
+            <li className="z-[999]">
               <a>
                 Dining Options 
                 <svg
@@ -94,40 +72,12 @@ export default function Navbar() {
                     <Link href="/"> Vanderbilt Dining Halls</Link>
                 </li>
                 <li>
-                    <Link href="/"> Restaurants around Town </Link>
+                    <Link href="/halalRestaurants"> Restaurants around Town </Link>
                 </li>
               </ul>
             </li>
             <li>
-                <Link href="/"> Donations </Link>
-            </li>
-            <li>
-              <a>
-                Additional Information 
-                <svg
-                  className="fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                </svg>
-              </a>
-              <ul className="p-2 bg-base-100">
-                <li>
-                    <Link href="/"> Campus Praying Spaces </Link>
-                </li>
-                <li>
-                    <Link href="/"> Adjacent Organization Information </Link>
-                </li>
-                <li>
-                    <Link href="/"> Nashville Community Information </Link>
-                </li>
-                <li>
-                    <Link href="/"> Admin Page </Link>
-                </li>
-              </ul>
+                <Link href="/"> Donate </Link>
             </li>
           </ul>
         </div>

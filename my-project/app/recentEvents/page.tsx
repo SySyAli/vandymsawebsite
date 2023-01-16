@@ -15,7 +15,7 @@ export default async function InstagramPage() {
     return (
         <div>
             <h1>Instagram Posts</h1>
-            <div className="grid grid-rows-2 grid-cols-6 gap-100">
+            <div className="grid grid-rows-2 grid-cols-4 gap-100">
             {posts.instagramPosts.map((post:any) => { 
                 return(
                     <div className="h-fit w-fit " key={post.id}><InstagramPost instaPost={post}/></div>
