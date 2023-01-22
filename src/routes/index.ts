@@ -1,9 +1,9 @@
 import express from "express"
 import {getUserTimesAndUpdate, addUserTimesAndUpdate, updateIqamahTime, deleteIqamahTime, getTodayPrayerTime} from "./../controllers/prayertimesjummahupdate"
-import { getVandyHalalFood, getHalalRestaurants, addHalalRestaurant, updateHalalRestaurant, deleteHalalRestaurant } from "../controllers/food";
+import {getHalalRestaurants, addHalalRestaurant, updateHalalRestaurant, deleteHalalRestaurant } from "../controllers/food";
 import { getCalendarEvents, getSingleEvent } from "../controllers/calendar";
 import { getInstagramPosts } from "../controllers/instagram";
-import { giveMenuCode } from "../controllers/vandyHalalFood";
+import { getHalalFood } from "../controllers/vandyHalalFood";
 const router = express.Router();
 
 // Instagram Posts
@@ -14,8 +14,7 @@ router.get("/getMSAEvents", getCalendarEvents)
 router.get("/getSingleEvent/:id", getSingleEvent)
 
 // food routes
-router.get("/getHalalFood", getVandyHalalFood)
-router.get("/getMenuCodes", giveMenuCode)
+router.get("/getHalalFood", getHalalFood)
 
 // CRUD operations for Halal Restaurants
 router.get("/getHalalRestaurants", getHalalRestaurants)
