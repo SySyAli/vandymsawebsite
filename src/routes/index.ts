@@ -3,7 +3,7 @@ import {getUserTimesAndUpdate, addUserTimesAndUpdate, updateIqamahTime, deleteIq
 import {getHalalRestaurants, addHalalRestaurant, updateHalalRestaurant, deleteHalalRestaurant } from "../controllers/food";
 import { getCalendarEvents, getSingleEvent } from "../controllers/calendar";
 import { getInstagramPosts } from "../controllers/instagram";
-import { getHalalFood } from "../controllers/vandyHalalFood";
+import { getHalalFoodFromDataBase  } from "../controllers/vandyHalalFood";
 const router = express.Router();
 
 // Instagram Posts
@@ -14,7 +14,7 @@ router.get("/getMSAEvents", getCalendarEvents)
 router.get("/getSingleEvent/:id", getSingleEvent)
 
 // food routes
-router.get("/getHalalFood", getHalalFood)
+router.get("/getHalalFood", getHalalFoodFromDataBase)
 
 // CRUD operations for Halal Restaurants
 router.get("/getHalalRestaurants", getHalalRestaurants)

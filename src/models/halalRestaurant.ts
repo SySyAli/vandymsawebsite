@@ -3,7 +3,7 @@ import {model, Schema} from "mongoose"
 
 
 const HalalRestaurantSchema = new Schema({
-    name: {
+    everything: {
         type:String,
         required: true
     },

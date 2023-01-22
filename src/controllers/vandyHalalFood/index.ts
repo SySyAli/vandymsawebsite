@@ -1,10 +1,47 @@
 import { Response, Request } from "express";
 import { chromium } from "playwright";
 import HtmlTableToJson from "./HtmlTableToJson";
+import halalFood from "../../models/halalFood";
+import { halalFoodType } from "../../types/halalFood";
+
+
+async function getHalalFoodFromDataBase(req: Request, res: Response){
+  try{
+    //
+    const allHalal: halalFoodType[] = await halalFood.find()
+    res.status(200).json({"message":"Halal Food sent successfully", "allFood": allHalal})
+  } catch(error){
+    console.log(error)
+    throw error
+  }
+}
+
+async function refreshFood(){
+  try{
+    //
+    const count = await halalFood.count()
+    if(count === 0){
+      const newFood = await getHalalFood()
+      const toBeAdded: halalFoodType = new halalFood({
+        "everything": newFood
+    }) 
+    await toBeAdded.save()
+    console.log("CREATED THING")
+    } else{
+      const oldFood = await halalFood.find()
+      const newFood = await getHalalFood()
+      await halalFood.findByIdAndUpdate({"_id": oldFood[0]._id}, {"everything": newFood})
+    }
+
+  } catch(error){
+    console.log(error)
+    throw error
+  }
+}
 
 
 
-async function getHalalFood(req: Request, res: Response) {
+async function getHalalFood() {
   try {
     const results: any = [
       {
@@ -59,12 +96,12 @@ async function getHalalFood(req: Request, res: Response) {
     for(let i = 3; i < results.length; i++){
       results[i].message = "OPEN"
       results[i].foodInformation = await scraping(results[i].diningHall)
+      console.log(results[i].diningHall)
     }
 
     console.log(await results)
-    res.status(200).json(results)
+    return results
 
-    
   } catch (error) {
     console.log(error);
     throw error;
@@ -106,11 +143,11 @@ async function scraping(diningHallName: string) {
     await page.waitForTimeout(5000);
     const bhtml = await page.content();
     if (bhtml.indexOf("Item Name") === -1) {
-      console.log(diningHallName + ": BREAKFAST HAS NO ITEMS");
+      //console.log(diningHallName + ": BREAKFAST HAS NO ITEMS");
       information.Breakfast.message = "BREAKFAST HAS NO ITEMS"
     } else {
       const buttons = [];
-      console.log(diningHallName + "BREAKFAST HAS ITEMS");
+      //console.log(diningHallName + "BREAKFAST HAS ITEMS");
       information.Breakfast.message = "BREAKFAST HAS ITEMS"
       /* Code that will get table of halal items */
       await page
@@ -131,7 +168,7 @@ async function scraping(diningHallName: string) {
           );
 
           const jsonTables = HtmlTableToJson.parse(nhtml, { values: false });
-          console.log(diningHallName + ": "+ jsonTables.results);
+          //console.log(diningHallName + ": "+ jsonTables.results);
           information.Breakfast.food = jsonTables.results
         });
     }
@@ -142,11 +179,11 @@ async function scraping(diningHallName: string) {
     await page.waitForTimeout(5000);
     const lhtml = await page.content();
     if (lhtml.indexOf("Item Name") === -1) {
-      console.log(diningHallName + " LUNCH HAS NO ITEMS");
+      //console.log(diningHallName + " LUNCH HAS NO ITEMS");
       information.Lunch.message = "LUNCH HAS NO ITEMS"
     } else {
       const buttons = [];
-      console.log(diningHallName + " LUNCH HAS ITEMS");
+      //console.log(diningHallName + " LUNCH HAS ITEMS");
       information.Lunch.message = "LUNCH HAS ITEMS"
       /* Code that will get table of halal items */
       await page
@@ -167,7 +204,7 @@ async function scraping(diningHallName: string) {
           );
 
           const jsonTables = HtmlTableToJson.parse(nhtml, { values: false });
-          console.log(diningHallName +": " + jsonTables.results);
+          //console.log(diningHallName +": " + jsonTables.results);
           information.Lunch.food = jsonTables.results
         });
     }
@@ -179,11 +216,11 @@ async function scraping(diningHallName: string) {
     await page.waitForTimeout(5000);
     const brhtml = await page.content();
     if (brhtml.indexOf("Item Name") === -1) {
-      console.log("BRUNCH HAS NO ITEMS");
+      //console.log("BRUNCH HAS NO ITEMS");
       information.Brunch.message = "BRUNCH HAS NO ITEMS"
     } else {
       const buttons = [];
-      console.log("BRUNCH HAS ITEMS");
+      //console.log("BRUNCH HAS ITEMS");
       information.Brunch.message = "BRUNCH HAS ITEMS"
       /* Code that will get table of halal items */
       await page
@@ -204,7 +241,7 @@ async function scraping(diningHallName: string) {
           );
 
           const jsonTables = HtmlTableToJson.parse(nhtml, { values: false });
-          console.log(jsonTables.results);
+          //console.log(jsonTables.results);
           information.Brunch.food = jsonTables.results
         });
     }
@@ -215,11 +252,11 @@ async function scraping(diningHallName: string) {
     await page.waitForTimeout(5000);
     const dhtml = await page.content();
     if (dhtml.indexOf("Item Name") === -1) {
-      console.log("DINNER HAS NO ITEMS");
+      //console.log("DINNER HAS NO ITEMS");
       information.Dinner.message = "DINNER HAS NO ITEMS"
     } else {
       const buttons = [];
-      console.log("DINNER HAS ITEMS");
+      //console.log("DINNER HAS ITEMS");
       information.Dinner.message = "DINNER HAS ITEMS"
       /* Code that will get table of halal items */
       await page
@@ -240,7 +277,7 @@ async function scraping(diningHallName: string) {
           );
 
           const jsonTables = HtmlTableToJson.parse(nhtml, { values: false });
-          console.log(jsonTables.results);
+          //console.log(jsonTables.results);
           information.Dinner.food = jsonTables.results
         });
     }
@@ -251,11 +288,11 @@ async function scraping(diningHallName: string) {
     await page.waitForTimeout(5000);
     const dOhtml = await page.content();
     if (dOhtml.indexOf("Item Name") === -1) {
-          console.log("DAILY OFFERINGS HAS NO ITEMS");
+          //console.log("DAILY OFFERINGS HAS NO ITEMS");
           information.DailyOffering.message = "DAILY OFFERINGS HAS NO ITEMS"
     } else {
           const buttons = [];
-          console.log("Daily Offerings HAS ITEMS");
+          //console.log("Daily Offerings HAS ITEMS");
           information.DailyOffering.message = "DAILY OFFERINGS HAS ITEMS"
           /* Code that will get table of halal items */
           await page
@@ -276,7 +313,7 @@ async function scraping(diningHallName: string) {
               );
 
               const jsonTables = HtmlTableToJson.parse(nhtml, { values: false });
-              console.log(jsonTables.results);
+              //console.log(jsonTables.results);
               information.DailyOffering.food = jsonTables.results
             });
     }
@@ -285,21 +322,9 @@ async function scraping(diningHallName: string) {
     return information
   } catch (error) {
     console.log(error);
+    throw error
   }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-export {getHalalFood}
+export {getHalalFoodFromDataBase, refreshFood}

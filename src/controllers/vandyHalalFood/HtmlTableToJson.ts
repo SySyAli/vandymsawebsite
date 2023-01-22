@@ -28,7 +28,7 @@ export default class HtmlTableToJson {
 		this._process()
 	}
 
-	static parse(html: any, options: an) {
+	static parse(html: any, options: any) {
 		return new HtmlTableToJson(html, options)
 	}
 

@@ -69,7 +69,7 @@ export default function Navbar() {
               </a>
               <ul className="p-2 bg-base-100">
                 <li>
-                    <Link href="/"> Vanderbilt Dining Halls</Link>
+                    <Link href="/halalDiningFood"> Vanderbilt Dining Halls</Link>
                 </li>
                 <li>
                     <Link href="/halalRestaurants"> Restaurants around Town </Link>

@@ -6,6 +6,7 @@ import cors from "cors"
 import routes from "./routes"
 import cron from "node-cron"
 import { refreshToken } from './controllers/instagram'
+import { refreshFood } from './controllers/vandyHalalFood'
 
 const app: Express = express();
 
@@ -24,14 +25,17 @@ app.listen(PORT, () =>
 */
 
 
-// cron call - runs at 12 AM everyday
-cron.schedule('0 0 23 * * *', async () => {
+// cron call - runs at 3 AM everyday
+cron.schedule('0 0 3 * * *', async () => {
     await refreshToken();
+    await refreshFood()
 });
 
 mongoose.set('strictQuery', true)
 mongoose.connect('mongodb://localhost:27017/admin').then(async () =>{
   await refreshToken()
+  await refreshFood()
+  console.log("Hello World")
 }).then(() =>
 app.listen(PORT, async () =>
   console.log(`Server running on http://localhost:${PORT}`)
