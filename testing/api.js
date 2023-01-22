@@ -1,50 +1,72 @@
-import { chromium, devices } from "playwright";
-import { parse } from "node-html-parser";
+import { chromium } from "playwright";
 import HtmlTableToJson from "html-table-to-json";
 
-const results = [
-  {
-    diningHall: "Rand Dining Center",
-    foodInformation:{}
-  },
-  {
-    diningHall: "2301",
-    foodInformation:{}
-  },
-  {
-    diningHall: "The Pub at Overcup Oak",
-    foodInformation:{}
-  },
-  {
-    diningHall: "The Commons Dining Center",
-    foodInformation:{}
-  },
-  {
-    diningHall: "The Kitchen at Kissam",
-    foodInformation:{}
-  },
-  {
-    diningHall: "E. Bronson Ingram Dining Center",
-    foodInformation:{}
-  },
-  {
-    diningHall: "Rothschild Dining Center - Contains Peanuts & Treenuts",
-    foodInformation:{}
-  },
-  {
-    diningHall: "Zeppos Dining",
-    foodInformation:{}
-  },
-];
-
 //
+async function getHalalFood(){
+    try {
+        const results = [
+            {
+              diningHall: "Rand Dining Center",
+              message: "",foodInformation:{}
+            },
+            {
+              diningHall: "2301",
+              message: "",foodInformation:{}
+            },
+            {
+              diningHall: "The Pub at Overcup Oak",
+              message: "",foodInformation:{}
+            },
+            {
+              diningHall: "The Commons Dining Center",
+              message: "",foodInformation:{}
+            },
+            {
+              diningHall: "The Kitchen at Kissam",
+              message: "",foodInformation:{}
+            },
+            {
+              diningHall: "E. Bronson Ingram Dining Center",
+              message: "",foodInformation:{}
+            },
+            {
+              diningHall: "Rothschild Dining Center - Contains Peanuts & Treenuts",
+              message: "",foodInformation:{}
+            },
+            {
+              diningHall: "Zeppos Dining",    
+              message: "",foodInformation:{}
+            },
+          ];
+          
+          const date = new Date
+          // Rand Dining Hall, 2301, Pub
+          if(date.getDay() === 0 || date.getDay() === 6){
+            results[0].message = "CLOSED"
+            results[1].message = "CLOSED"
+            results[2].message = "CLOSED"
+          }
+          for(let i = 3; i < results.length; i++){
+            results[i].message = "OPEN"
+            results[i].foodInformation = await scraping(results[i].diningHall)
+          }
+
+          console.log(await results)
+          return results
+
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
 
 
-scraping("E. Bronson Ingram Dining Center");
+}
+
 
 async function scraping(diningHallName) {
   try {
     let information = {
+        message:"",
         Breakfast: { message: "", food: {} },
         Lunch: { message: "", food: {} },
         DailyOffering: { message: "", food: {} },
@@ -74,7 +96,7 @@ async function scraping(diningHallName) {
     await page.waitForTimeout(5000);
     let bhtml = await page.content();
     if (bhtml.indexOf("Item Name") === -1) {
-      console.log(diningHallName + "BREAKFAST HAS NO ITEMS");
+      console.log(diningHallName + ": BREAKFAST HAS NO ITEMS");
       information.Breakfast.message = "BREAKFAST HAS NO ITEMS"
     } else {
       const buttons = [];
@@ -98,13 +120,12 @@ async function scraping(diningHallName) {
             newTable.indexOf("</table>") + 8
           );
 
-          const root = parse(nhtml);
           const jsonTables = HtmlTableToJson.parse(nhtml);
           console.log(diningHallName + ": "+ jsonTables.results);
           information.Breakfast.food = jsonTables.results
         });
     }
-
+    
     // Lunch
     await page.getByTitle("Selected Meal: Show All Meals").click();
     await page.getByRole("link", { name: "Lunch" }).click();
@@ -135,7 +156,6 @@ async function scraping(diningHallName) {
             newTable.indexOf("</table>") + 8
           );
 
-          const root = parse(nhtml);
           const jsonTables = HtmlTableToJson.parse(nhtml);
           console.log(diningHallName +": " + jsonTables.results);
           information.Lunch.food = jsonTables.results
@@ -173,7 +193,6 @@ async function scraping(diningHallName) {
             newTable.indexOf("</table>") + 8
           );
 
-          const root = parse(nhtml);
           const jsonTables = HtmlTableToJson.parse(nhtml);
           console.log(jsonTables.results);
           information.Brunch.results = jsonTables.results
@@ -210,7 +229,6 @@ async function scraping(diningHallName) {
             newTable.indexOf("</table>") + 8
           );
 
-          const root = parse(nhtml);
           const jsonTables = HtmlTableToJson.parse(nhtml);
           console.log(jsonTables.results);
           information.Dinner.food = jsonTables.results
@@ -246,8 +264,7 @@ async function scraping(diningHallName) {
                 newTable.indexOf('<div class="table-responsive pt-3"'),
                 newTable.indexOf("</table>") + 8
               );
-    
-              const root = parse(nhtml);
+
               const jsonTables = HtmlTableToJson.parse(nhtml);
               console.log(jsonTables.results);
               information.DailyOffering.food = jsonTables.results
@@ -260,3 +277,7 @@ async function scraping(diningHallName) {
     console.log(error);
   }
 }
+
+const foods = await getHalalFood()
+
+console.log(JSON.stringify(foods))
