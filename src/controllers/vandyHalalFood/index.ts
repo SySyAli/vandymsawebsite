@@ -92,6 +92,12 @@ async function getHalalFood() {
       results[0].message = "CLOSED"
       results[1].message = "CLOSED"
       results[2].message = "CLOSED"
+    } else{
+      for(let i = 0; i < 3; i++){
+        results[i].message = "OPEN"
+        results[i].foodInformation = await scraping(results[i].diningHall)
+        console.log(results[i].diningHall)
+      }
     }
     for(let i = 3; i < results.length; i++){
       results[i].message = "OPEN"
@@ -128,7 +134,7 @@ async function scraping(diningHallName: string) {
 
     // add rand code to test see if current test code works first on weekends
     await page.getByRole("button", { name: "Only show Halal" }).click();
-
+    await page.waitForTimeout(5000)
     // Set location
     await page.getByTitle("Selected Location: Show All Units").click();
     await page.getByTitle(diningHallName).click();
@@ -142,7 +148,7 @@ async function scraping(diningHallName: string) {
     await page.getByRole("link", { name: "Breakfast" }).click();
     await page.waitForTimeout(5000);
     const bhtml = await page.content();
-    if (bhtml.indexOf("Item Name") === -1) {
+    if (bhtml.indexOf('There are no items available for this menu selection.') > 0 || bhtml.indexOf("Item Name") === -1) {
       //console.log(diningHallName + ": BREAKFAST HAS NO ITEMS");
       information.Breakfast.message = "BREAKFAST HAS NO ITEMS"
     } else {

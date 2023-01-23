@@ -4,11 +4,14 @@ import {getHalalRestaurants, addHalalRestaurant, updateHalalRestaurant, deleteHa
 import { getCalendarEvents, getSingleEvent } from "../controllers/calendar";
 import { getInstagramPosts } from "../controllers/instagram";
 import { getHalalFoodFromDataBase  } from "../controllers/vandyHalalFood";
+import { getGooglePhotoLinks } from "../controllers/pictures";
 const router = express.Router();
+
+// Pictures Links Routes
+router.get("/getPhotoLinks", getGooglePhotoLinks)
 
 // Instagram Posts
 router.get("/getInstagramPosts", getInstagramPosts)
-
 // Calendar Routes
 router.get("/getMSAEvents", getCalendarEvents)
 router.get("/getSingleEvent/:id", getSingleEvent)

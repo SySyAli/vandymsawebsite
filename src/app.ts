@@ -35,7 +35,6 @@ mongoose.set('strictQuery', true)
 mongoose.connect('mongodb://localhost:27017/admin').then(async () =>{
   await refreshToken()
   await refreshFood()
-  console.log("Hello World")
 }).then(() =>
 app.listen(PORT, async () =>
   console.log(`Server running on http://localhost:${PORT}`)
