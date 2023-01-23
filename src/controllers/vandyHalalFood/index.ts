@@ -126,7 +126,7 @@ async function scraping(diningHallName: string) {
         Dinner: { message: "", food: {} },
         Brunch: { message: "", food: {} },
       }
-
+    let count: any;
 
     const browser = await chromium.launch();
     const page = await browser.newPage();
@@ -145,7 +145,15 @@ async function scraping(diningHallName: string) {
 
     // Breakfast
     await page.getByTitle("Selected Meal: Show All Meals").click();
-    await page.getByRole("link", { name: "Breakfast" }).click();
+    await page.getByTitle("Breakfast").click();
+    /*
+    count = await page.getByRole("link", { name: "Breakfast" }).count()
+    if(count === 1){
+      await page.getByRole("link", { name: "Breakfast" }).click();
+    } else{
+      await page.getByRole("link", { name: "Breakfast" }).first
+    }
+    */
     await page.waitForTimeout(5000);
     const bhtml = await page.content();
     if (bhtml.indexOf('There are no items available for this menu selection.') > 0 || bhtml.indexOf("Item Name") === -1) {
@@ -181,7 +189,9 @@ async function scraping(diningHallName: string) {
     
     // Lunch
     await page.getByTitle("Selected Meal: Show All Meals").click();
-    await page.getByRole("link", { name: "Lunch" }).click();
+    await page.getByTitle("Lunch").click();
+
+    
     await page.waitForTimeout(5000);
     const lhtml = await page.content();
     if (lhtml.indexOf("Item Name") === -1) {

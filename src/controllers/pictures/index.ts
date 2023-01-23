@@ -24,13 +24,16 @@ async function getGooglePhotoLinks(req: Request, res: Response){
     try {
         const linksArray: any = []
         // get ids, then put it into links
-        const results = await drive.files.list({q:"'1Ex2KzmkkUb8T2tkvG72pk-FNHdlEjrmC' in parents"})
+        const results = await drive.files.list({q:`'${process.env.GOOGLE_IMAGE_FOLDER}' in parents`})
         console.log(results.data.files)
         if(results.data.files !== undefined){
+            // && results.data.files[i].mimeType.indexOf("jpeg") > 0
             for(let i = 0; i < results.data.files.length; i++){
-                linksArray[i] = `https://drive.google.com/uc?export=view&id=${results.data.files[i].id}`
+                if(results.data.files[i].mimeType !== undefined && results.data.files[i].mimeType !== null && (results.data.files[i].mimeType === "image/jpeg" || results.data.files[i].mimeType === "image/png" )){
+                    linksArray.push(`https://drive.google.com/uc?export=view&id=${results.data.files[i].id}`) 
+                }
             }
-            res.status(200).json({"message": "NO PHOTO LINKS", "results": linksArray})
+            res.status(200).json({"message": "PHOTO LINKS", "results": linksArray})
         } else{
             res.status(200).json({"message": "NO PHOTO LINKS", "results": linksArray})
         }

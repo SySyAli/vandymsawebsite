@@ -9,7 +9,7 @@ export default function Navbar() {
           <div className="avatar">
             <div className="w-24 rounded">
               <Link href="/">
-                <img src="/msaLogo.jpeg" />
+                <img src="/MSA.png" />
               </Link>
             </div>
           </div>

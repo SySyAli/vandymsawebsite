@@ -1,5 +1,5 @@
 import "./globals.css";
-
+import Carousel from "./components/Carousel";
 
 async function getPrayerTimes() {
   const url = await `http://localhost:4000/prayerTimes`;
@@ -7,10 +7,30 @@ async function getPrayerTimes() {
   const data = await res.json();
   return data;
 }
+async function getPhotoUrls(){
+  const url = await 'http://localhost:4000/getPhotoLinks'
+  const res = await fetch(url, {cache: "no-store"})
+  const data = await res.json()
+  return data
+}
+async function getEvents(){
+  const url = await 'http://localhost:4000/getMSAEvents'
+  const res = await fetch(url, {cache: "no-store"})
+  const data = await res.json()
+  return data
+}
 
+// FIGURE OUT WHAT TO DO WITH CAROUSEL - AUTOMATIC OR BUTTONS/MANUAL
+// FIGURE OUT TIME CONVERSION
 export default async function Home() {
   const times: any = await getPrayerTimes()
+  const photoUrls: any = await getPhotoUrls()
+  const calendarEvents: any = await getEvents()
+  const threeEvents: any = calendarEvents.events.slice(0,3)
 
+
+  // maybe choose ten random elements?
+  // get photo thing to work first
   return (
     <div>
       <div className="alert shadow-lg">
@@ -31,12 +51,15 @@ export default async function Home() {
           <span>{times.iqammahTimes.jummahUpdate === 'undefined' ? <>Loading...</> : <>{times.iqammahTimes.jummahUpdate}</>}</span>
         </div>
       </div>
-
-      <h1>Photo Carousel</h1>
-
+      
+      <Carousel links={photoUrls.results}/>
       <PrayerTable iTimes={times}/>
-      <h1>Upcoming Events (Next 3)</h1>
-      <h1>Maybe put calendar - ask rashid</h1>
+      <h1>The Next Three Upcoming Event: </h1>
+      {threeEvents.map((event: any, i: any) =>{
+        return(
+          <div key={i}><Event event={event}/></div>
+        )
+      })}
     </div>
   );
 }
@@ -93,6 +116,60 @@ function PrayerTable({iTimes}: any){
   )
 }
 
-function setActive(){
+function Event({ event }: any) {
+  return (
+    <div>
+      <div className="card card-bordered bg-base-200 shadow-xl h-fit w-fit">
+        <div className="card-body">
+          {event.summary !== undefined ? (
+            <h2 className="card-title">{event.summary}</h2>
+          ) : (
+            <h2 className="card-title">(No Name)</h2>
+          )}
 
+          {event.location !== undefined ? (
+            <h4>{event.location}</h4>
+          ) : (
+            <h4>Undefined/Online</h4>
+          )}
+
+          {event.start.timeZone !== undefined ? (
+            <h6>Timezone: {event.start.timeZone}</h6>
+          ) : (
+            <h6>(No Timezone)</h6>
+          )}
+
+          {event.start.dateTime !== undefined ? (
+            <p>Start Time: {event.start.dateTime}</p>
+          ) : (
+            <p></p>
+          )}
+
+          {event.end.dateTime !== undefined ? (
+            <p>End Time: {event.end.dateTime}</p>
+          ) : (
+            <p></p>
+          )}
+
+          {event.start.date !== undefined ? (
+            <p>Start Date: {event.start.date}</p>
+          ) : (
+            <p></p>
+          )}
+
+          {event.end.date !== undefined ? (
+            <p>End Date: {event.end.date}</p>
+          ) : (
+            <p></p>
+          )}
+
+          {event.description !== undefined ? (
+            <p>{event.description}</p>
+          ) : (
+            <p>Undefined</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }

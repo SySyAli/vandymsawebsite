@@ -39,7 +39,7 @@ async function getInstagramPosts(req: Request, res: Response){
         // GET IMAGES using basic facebook api
         const aToken = await Instagrams.find()
         const responseData = await axios.get(`https://graph.instagram.com/me/media?fields=username,caption,permalink,media_type,media_url,children%7Bmedia_url%7D&access_token=${aToken[0].access_token}`)
-        res.status(200).json({"message":"instagram posts", "instagramPosts": responseData.data.data.splice(0,11)})
+        res.status(200).json({"message":"instagram posts", "instagramPosts": responseData.data.data.slice(0,11)})
 
     } catch (error) {
         console.log(error)
