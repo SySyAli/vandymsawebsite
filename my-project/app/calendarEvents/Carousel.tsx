@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import "./styles.css"
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
+import hdate from 'human-date'
 
 export default function Carousel({events}: any) {
   const [currentSlide, setCurrentSlide] = React.useState(0)
@@ -109,13 +110,13 @@ function Event({ event }: any) {
             )}
   
             {event.start.dateTime !== undefined ? (
-              <p>Start Time: {event.start.dateTime}</p>
+              <p className="text-red-400">End Time: {hdate.prettyPrint(new Date(event.start.dateTime), { showTime: true })}</p>
             ) : (
               <p></p>
             )}
   
             {event.end.dateTime !== undefined ? (
-              <p>End Time: {event.end.dateTime}</p>
+              <p className="text-red-400">End Time: {hdate.prettyPrint(new Date(event.end.dateTime), { showTime: true })}</p>
             ) : (
               <p></p>
             )}

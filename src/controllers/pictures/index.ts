@@ -29,7 +29,7 @@ async function getGooglePhotoLinks(req: Request, res: Response){
         if(results.data.files !== undefined){
             // && results.data.files[i].mimeType.indexOf("jpeg") > 0
             for(let i = 0; i < results.data.files.length; i++){
-                if(results.data.files[i].mimeType !== undefined && results.data.files[i].mimeType !== null && (results.data.files[i].mimeType === "image/jpeg" || results.data.files[i].mimeType === "image/png" )){
+                if(results.data.files[i].mimeType !== undefined && results.data.files[i].mimeType !== null && (results.data.files[i].mimeType === "image/webp" )){
                     linksArray.push(`https://drive.google.com/uc?export=view&id=${results.data.files[i].id}`) 
                 }
             }

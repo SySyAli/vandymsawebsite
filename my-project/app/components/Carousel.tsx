@@ -11,6 +11,9 @@ export default function Carousel({links}: any) {
   const [loaded, setLoaded] = useState(false)
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
+    slides: {
+      perView: 1,
+    },
   },
   [
     (slider) => {
@@ -44,12 +47,12 @@ export default function Carousel({links}: any) {
   ])
   return (
     <><></>
-      <div className="navigation-wrapper">
-        <div ref={sliderRef} className="keen-slider">
+      <div className="navigation-wrapper w-[50%]">
+        <div ref={sliderRef} className="keen-slider w-full h-[32rem] rounded-lg">
         {links.map((link: any, i:any) => {
             return (
-              <div className={"keen-slider__slide number-slide"+i+1} key={i}>
-                <img className="" src={link}></img>
+              <div className={"w-[50%]] rounded-lg keen-slider__slide number-slide"+(i+1)} key={i}>
+                <img className="object-center object-scale-down overflow-hidden" src={link}></img>
               </div>
             );
           })}

@@ -1,17 +1,14 @@
 [class^="number-slide"],
 [class*=" number-slide"] {
-  background: grey;
   display: flex;
-  height: fit-content;
-  width:fit-content;
   align-items: center;
   justify-content: center;
-  color: #000;
 }
 
 .navigation-wrapper {
   position: relative;
 }
+
 
 
 .arrow {

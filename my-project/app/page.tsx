@@ -1,5 +1,7 @@
 import "./globals.css";
 import Carousel from "./components/Carousel";
+import hdate from 'human-date'
+import Slider from "./components/newCarousel";
 
 async function getPrayerTimes() {
   const url = await `http://localhost:4000/prayerTimes`;
@@ -7,15 +9,15 @@ async function getPrayerTimes() {
   const data = await res.json();
   return data;
 }
-async function getPhotoUrls(){
+async function getPhotoUrls() {
   const url = await 'http://localhost:4000/getPhotoLinks'
-  const res = await fetch(url, {cache: "no-store"})
+  const res = await fetch(url, { cache: "no-store" })
   const data = await res.json()
   return data
 }
-async function getEvents(){
+async function getEvents() {
   const url = await 'http://localhost:4000/getMSAEvents'
-  const res = await fetch(url, {cache: "no-store"})
+  const res = await fetch(url, { cache: "no-store" })
   const data = await res.json()
   return data
 }
@@ -26,14 +28,11 @@ export default async function Home() {
   const times: any = await getPrayerTimes()
   const photoUrls: any = await getPhotoUrls()
   const calendarEvents: any = await getEvents()
-  const threeEvents: any = calendarEvents.events.slice(0,3)
+  const threeEvents: any = calendarEvents.events.slice(0, 1)
 
 
-  // maybe choose ten random elements?
-  // get photo thing to work first
-  return (
-    <div>
-      <div className="alert shadow-lg">
+  /*
+    <div className="alert shadow-lg w-full items-center justify-center">
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,67 +50,87 @@ export default async function Home() {
           <span>{times.iqammahTimes.jummahUpdate === 'undefined' ? <>Loading...</> : <>{times.iqammahTimes.jummahUpdate}</>}</span>
         </div>
       </div>
+  */
+
+  // maybe choose ten random elements?
+  // get photo thing to work first
+  // 
+  return (
+    <div className='px-4 flex flex-col gap-12 w-full items-center justify-center'>
+
+      <div className="hero h-[50vh]" style={{ backgroundImage: `url('https://www.commonapp.org/static/f14242e1e38d8f02ce26ed9f5e57c371/vanderbilt-university_277.jpg')` }}>
+        <div className="hero-overlay bg-opacity-60"></div>
+        <div className="hero-content text-center text-neutral-content">
+          <div className="max-w-md">
+            <h1 className="mb-5 text-5xl font-bold">Welcome to the Vanderbilt MSA!</h1>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-row w-full gap-6">
+      <Carousel links={photoUrls.results} />
+        <div className="flex flex-col gap-6 w-full items-center justify-center pb-8">
+        <h1 className="font-bold text-3xl text-right">The Next MSA Event! </h1>
+          {threeEvents.map((event: any, i: any) => {
+            return (
+              <div key={i}><Event event={event} /></div>
+            )
+          })}
+        </div>
+      </div>
+
+      <PrayerTable iTimes={times} />
       
-      <Carousel links={photoUrls.results}/>
-      <PrayerTable iTimes={times}/>
-      <h1>The Next Three Upcoming Event: </h1>
-      {threeEvents.map((event: any, i: any) =>{
-        return(
-          <div key={i}><Event event={event}/></div>
-        )
-      })}
+
     </div>
   );
 }
 
 // FIGURE OUT TIMEZONES
 // current Prayer
-function PrayerTable({iTimes}: any){
+function PrayerTable({ iTimes }: any) {
   return (
     <>
-    <h1 className="text-center font-bold">Prayer Times</h1>
-    <h6 className="text-center">{iTimes.IslamicDate.day} {iTimes.IslamicDate.month}, {iTimes.IslamicDate.year} -- {iTimes.currentTimeStamp} -- Nashville, TN</h6>
-    <div className="overflow-x-auto">
-  <table className="table w-full">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Fajr</th>
-        <th>Sunrise</th>
-        <th>Zuhr</th>
-        <th>Asr</th>
-        <th>Maghrib</th>
-        <th>Isha</th>
-        <th>First Jummah</th>
-        <th>Second Jummah</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Prayer Time:</td>
-        <td className={iTimes.currentPrayer === "fajr" ? "font-bold" : ""}>{iTimes.prayerTimes.fajr === 'undefined' ? 'Loading' : iTimes.prayerTimes.fajr}</td>
-        <td className={iTimes.currentPrayer === "NoPrayerTime" ? "font-bold" : ""}>{iTimes.prayerTimes.sunrise === 'undefined' ? 'Loading' : iTimes.prayerTimes.sunrise}</td>
-        <td className={iTimes.currentPrayer === "zuhur" ? "font-bold" : ""}>{iTimes.prayerTimes.zuhr === 'undefined' ? 'Loading' : iTimes.prayerTimes.zuhr}</td>
-        <td className={iTimes.currentPrayer === "asr" ? "font-bold" : ""}>{iTimes.prayerTimes.asr === 'undefined' ? 'Loading' : iTimes.prayerTimes.asr}</td>
-        <td className={iTimes.currentPrayer === "magrhib" ? "font-bold" : ""}>{iTimes.prayerTimes.maghrib === 'undefined' ? 'Loading' : iTimes.prayerTimes.maghrib}</td>
-        <td className={iTimes.currentPrayer === "isha" ? "font-bold" : ""}>{iTimes.prayerTimes.isha === 'undefined' ? 'Loading' : iTimes.prayerTimes.isha}</td>
-        <td>{iTimes.iqammahTimes.firstJummahTime === 'undefined' ? 'Loading' : iTimes.iqammahTimes.firstJummahTime}</td>
-        <td>{iTimes.iqammahTimes.secondJummahTime === 'undefined' ? 'Loading' : iTimes.iqammahTimes.secondJummahTime}</td>
-      </tr>
-      <tr >
-        <td>Iqamah Time: </td>
-        <td className={iTimes.currentPrayer === "fajr" ? "font-bold" : ""}>{iTimes.iqammahTimes.fajrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.fajrIqamah}</td>
-        <td className={iTimes.currentPrayer === "NoPrayerTime" ? "font-bold" : ""}>{iTimes.iqammahTimes.sunriseIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.sunriseIqamah}</td>
-        <td className={iTimes.currentPrayer === "zuhur" ? "font-bold" : ""}>{iTimes.iqammahTimes.zuhrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.zuhrIqamah}</td>
-        <td className={iTimes.currentPrayer === "asr" ? "font-bold" : ""}>{iTimes.iqammahTimes.asrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.asrIqamah}</td>
-        <td className={iTimes.currentPrayer === "magrhib" ? "font-bold" : ""}>{iTimes.maghribIqamah === 'undefined' ? 'Loading' : <>{iTimes.maghribiqammah}</>}</td>
-        <td className={iTimes.currentPrayer === "isha" ? "font-bold" : ""}>{iTimes.iqammahTimes.ishaIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.ishaIqamah}</td>
-        <td>N/A</td>
-        <td>N/A</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+      <h1 className="text-center font-bold text-3xl">Prayer Times</h1>
+      <h6 className="text-center">{iTimes.IslamicDate.day} {iTimes.IslamicDate.month}, {iTimes.IslamicDate.year} -- {iTimes.currentTimeStamp} -- Nashville, TN</h6>
+      <table className="table w-full">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Fajr</th>
+            <th>Sunrise</th>
+            <th>Zuhr</th>
+            <th>Asr</th>
+            <th>Maghrib</th>
+            <th>Isha</th>
+            <th>First Jummah</th>
+            <th>Second Jummah</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Prayer Time:</td>
+            <td className={iTimes.currentPrayer === "fajr" ? "font-bold" : ""}>{iTimes.prayerTimes.fajr === 'undefined' ? 'Loading' : iTimes.prayerTimes.fajr}</td>
+            <td className={iTimes.currentPrayer === "NoPrayerTime" ? "font-bold" : ""}>{iTimes.prayerTimes.sunrise === 'undefined' ? 'Loading' : iTimes.prayerTimes.sunrise}</td>
+            <td className={iTimes.currentPrayer === "zuhur" ? "font-bold" : ""}>{iTimes.prayerTimes.zuhr === 'undefined' ? 'Loading' : iTimes.prayerTimes.zuhr}</td>
+            <td className={iTimes.currentPrayer === "asr" ? "font-bold" : ""}>{iTimes.prayerTimes.asr === 'undefined' ? 'Loading' : iTimes.prayerTimes.asr}</td>
+            <td className={iTimes.currentPrayer === "magrhib" ? "font-bold" : ""}>{iTimes.prayerTimes.maghrib === 'undefined' ? 'Loading' : iTimes.prayerTimes.maghrib}</td>
+            <td className={iTimes.currentPrayer === "isha" ? "font-bold" : ""}>{iTimes.prayerTimes.isha === 'undefined' ? 'Loading' : iTimes.prayerTimes.isha}</td>
+            <td>{iTimes.iqammahTimes.firstJummahTime === 'undefined' ? 'Loading' : iTimes.iqammahTimes.firstJummahTime}</td>
+            <td>{iTimes.iqammahTimes.secondJummahTime === 'undefined' ? 'Loading' : iTimes.iqammahTimes.secondJummahTime}</td>
+          </tr>
+          <tr >
+            <td>Iqamah Time: </td>
+            <td className={iTimes.currentPrayer === "fajr" ? "font-bold" : ""}>{iTimes.iqammahTimes.fajrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.fajrIqamah}</td>
+            <td className={iTimes.currentPrayer === "NoPrayerTime" ? "font-bold" : ""}>{iTimes.iqammahTimes.sunriseIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.sunriseIqamah}</td>
+            <td className={iTimes.currentPrayer === "zuhur" ? "font-bold" : ""}>{iTimes.iqammahTimes.zuhrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.zuhrIqamah}</td>
+            <td className={iTimes.currentPrayer === "asr" ? "font-bold" : ""}>{iTimes.iqammahTimes.asrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.asrIqamah}</td>
+            <td className={iTimes.currentPrayer === "magrhib" ? "font-bold" : ""}>{iTimes.maghribIqamah === 'undefined' ? 'Loading' : <>{iTimes.maghribiqammah}</>}</td>
+            <td className={iTimes.currentPrayer === "isha" ? "font-bold" : ""}>{iTimes.iqammahTimes.ishaIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.ishaIqamah}</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+        </tbody>
+      </table>
     </>
   )
 }
@@ -119,7 +138,7 @@ function PrayerTable({iTimes}: any){
 function Event({ event }: any) {
   return (
     <div>
-      <div className="card card-bordered bg-base-200 shadow-xl h-fit w-fit">
+      <div className="card card-bordered bg-base-200 shadow-xl h-fit w-fit items-center justify-center">
         <div className="card-body">
           {event.summary !== undefined ? (
             <h2 className="card-title">{event.summary}</h2>
@@ -140,25 +159,25 @@ function Event({ event }: any) {
           )}
 
           {event.start.dateTime !== undefined ? (
-            <p>Start Time: {event.start.dateTime}</p>
+            <p>Start Time: {hdate.prettyPrint(new Date(event.start.dateTime), { showTime: true })}</p>
           ) : (
             <p></p>
           )}
 
           {event.end.dateTime !== undefined ? (
-            <p>End Time: {event.end.dateTime}</p>
+            <p>End Time: {hdate.prettyPrint(new Date(event.end.dateTime), { showTime: true })}</p>
           ) : (
             <p></p>
           )}
 
           {event.start.date !== undefined ? (
-            <p>Start Date: {event.start.date}</p>
+            <p>Start Date: {hdate.prettyPrint(new Date(event.start.date))}</p>
           ) : (
             <p></p>
           )}
 
           {event.end.date !== undefined ? (
-            <p>End Date: {event.end.date}</p>
+            <p>End Date: {hdate.prettyPrint(new Date(event.end.date))}</p>
           ) : (
             <p></p>
           )}

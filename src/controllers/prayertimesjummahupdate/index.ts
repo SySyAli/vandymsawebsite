@@ -2,8 +2,46 @@ import {Response, Request} from "express"
 import axois from "axios"
 import {PrayerTime} from "../../types/prayertimeupdate"
 import PrayerTimes from "../../models/prayertimeupdate"
+import { PrayerTimesAPI } from "../../types/prayertimeapi"
+import prayertimesapi from "../../models/prayertimesapi"
 
 // CRUD Operations for Iqamah, Jummah Times and Jummah Updates Search 
+
+
+async function refershPrayerTimes(){
+    try {
+        const times: PrayerTime[] = await PrayerTimes.find()
+        const date = new Date()
+        // Annex Coordinates: (36.14479431053963, -86.80420024114342)
+        const parameters = await {
+            "latitude": times[0].latitude,
+            "longitude": times[0].longitude,
+            "method": times[0].method,
+            "month":date.getMonth()+1,
+            "year": date.getFullYear(),
+            "maghribDelay": times[0].maghribDelay
+        }
+        //console.log(date.toString())
+        const data = await axois.get(`http://api.aladhan.com/v1/calendar?latitude=${parameters.latitude}&longitude=${parameters.longitude}&method=${parameters.method}&month=${parameters.month}&year=${parameters.year}`)
+        const currTime = await data.data.data[date.getDate()-1]
+
+        const count = await prayertimesapi.count()
+        if(count === 0){
+            const toBeAdded: PrayerTimesAPI = new prayertimesapi({
+                "everything": currTime
+            })
+            await toBeAdded.save()
+            console.log("CREATED THING")
+        } else{
+            const oldTimes = await prayertimesapi.find()
+            await prayertimesapi.findByIdAndUpdate({"_id": oldTimes[0]._id}, {"everything": currTime})
+        }
+
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
 
 async function getUserTimesAndUpdate(req: Request, res: Response){
     try{
@@ -103,9 +141,8 @@ async function getTodayPrayerTime(req: Request, res: Response){
         //console.log(date.toString())
         
 
-        const data = await axois.get(`http://api.aladhan.com/v1/calendar?latitude=${parameters.latitude}&longitude=${parameters.longitude}&method=${parameters.method}&month=${parameters.month}&year=${parameters.year}`)
-        const currTime = await data.data.data[date.getDate()-1]
-
+        let currTime: any = await prayertimesapi.find()
+        currTime = currTime[0].everything
         // get current prayer using the timestamp
         const prayerTimes24hrs = {"fajr": removeCST(currTime.timings.Fajr) + ":00", 
                                 "sunrise": removeCST(currTime.timings.Sunrise) + ":00",
@@ -263,6 +300,6 @@ function changeMonthName(monthNum:number){
 
 }
 
-export {getUserTimesAndUpdate, addUserTimesAndUpdate, updateIqamahTime, deleteIqamahTime, getTodayPrayerTime};
+export {refershPrayerTimes, getUserTimesAndUpdate, addUserTimesAndUpdate, updateIqamahTime, deleteIqamahTime, getTodayPrayerTime};
 
 
