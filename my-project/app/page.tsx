@@ -26,10 +26,10 @@ async function getEvents() {
 // FIGURE OUT TIME CONVERSION
 export default async function Home() {
   const times: any = await getPrayerTimes()
-  const photoUrls: any = await getPhotoUrls()
+  let photoUrls: any = await getPhotoUrls()
   const calendarEvents: any = await getEvents()
   const threeEvents: any = calendarEvents.events.slice(0, 1)
-
+  photoUrls = photoUrls.results.slice(0,10)
 
   /*
     <div className="alert shadow-lg w-full items-center justify-center">
@@ -56,8 +56,8 @@ export default async function Home() {
   // get photo thing to work first
   // 
   return (
-    <div className='px-4 flex flex-col gap-12 w-full items-center justify-center'>
-
+    <div className='flex flex-col gap-12 w-full items-center justify-center'>
+      
       <div className="hero h-[50vh]" style={{ backgroundImage: `url('https://www.commonapp.org/static/f14242e1e38d8f02ce26ed9f5e57c371/vanderbilt-university_277.jpg')` }}>
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
@@ -66,8 +66,8 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-row w-full gap-6">
-      <Carousel links={photoUrls.results} />
+      <div className="flex flex-col lg:flex-row w-full gap-6">
+        <Carousel links={photoUrls} />
         <div className="flex flex-col gap-6 w-full items-center justify-center pb-8">
         <h1 className="font-bold text-3xl text-right">The Next MSA Event! </h1>
           {threeEvents.map((event: any, i: any) => {
@@ -92,7 +92,7 @@ function PrayerTable({ iTimes }: any) {
     <>
       <h1 className="text-center font-bold text-3xl">Prayer Times</h1>
       <h6 className="text-center">{iTimes.IslamicDate.day} {iTimes.IslamicDate.month}, {iTimes.IslamicDate.year} -- {iTimes.currentTimeStamp} -- Nashville, TN</h6>
-      <table className="table w-full">
+      <table className="table w-full overflow-x-scroll">
         <thead>
           <tr>
             <th>Title</th>
