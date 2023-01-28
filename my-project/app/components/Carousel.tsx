@@ -47,12 +47,12 @@ export default function Carousel({links}: any) {
   ])
   return (
     <><></>
-      <div className="navigation-wrapper w-[50%]">
+      <div className="navigation-wrapper lg:w-[50%]">
         <div ref={sliderRef} className="keen-slider w-full h-[32rem] rounded-lg">
         {links.map((link: any, i:any) => {
             return (
-              <div className={"w-[50%]] rounded-lg keen-slider__slide number-slide"+(i+1)} key={i}>
-                <img className="object-center object-scale-down overflow-hidden" src={link}></img>
+              <div className={"h-full w-[50%] object-center object-scale-down overflow-hidden rounded-lg keen-slider__slide number-slide"+(i+1)} key={i}>
+                <img className="" src={link}></img>
               </div>
             );
           })}

@@ -15,10 +15,10 @@ export default async function HalalRestaurants() {
     <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">
       Halal Restaurants
     </h1>
-    <div>
+    <div className="flex flex-wrap flex-col items-stretch justify-center lg:flex-row lg:flew-wrap gap-100">
         {restaurants.allRestaurants.map((post: any) =>{
         return(
-            <div className="" key={post._id}><Restaurant info={post}/></div>
+            <div className="p-4" key={post._id}><Restaurant info={post}/></div>
         )
     })}
     </div>

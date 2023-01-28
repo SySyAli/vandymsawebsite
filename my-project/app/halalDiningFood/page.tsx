@@ -12,11 +12,11 @@ async function halalDiningFood() {
     const foods = await fetchHalalFood()
     return (
         <>
-        <div>Halal Food in Dining Halls</div>
-        <div className="grid grid-rows-2 grid-cols-3 h-fit w-fit ">
+        <div className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">Halal Food in Dining Halls</div>
+        <div className="flex flex-wrap flex-col items-stretch justify-center lg:flex-row lg:flew-wrap gap-100 ">
         {foods.allFood[0].everything.map((location: any, i: any) =>{
             return(
-                <div className="h-fit w-fit " key={i}>
+                <div className="h-full w-fit p-4" key={i}>
                     <DiningHallFood information = {location}/>
                 </div>
             )
@@ -30,7 +30,7 @@ function DiningHallFood({ information }: any) {
     const title = information.diningHall
     return (
             <div className="card card-bordered bg-base-200 shadow-xl">
-                <div className="card-body h-fit w-fit">
+                <div className="card-body h-full w-fit">
                     {information.diningHall !== undefined ? (
                         <h2 className="card-title text-center">{information.diningHall}</h2>
                     ) : (

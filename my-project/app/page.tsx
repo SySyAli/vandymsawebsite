@@ -67,7 +67,7 @@ export default async function Home() {
         </div>
       </div>
       <div className="flex flex-col lg:flex-row w-full gap-6">
-        <Carousel links={photoUrls} />
+        <Carousel className="" links={photoUrls} />
         <div className="flex flex-col gap-6 w-full items-center justify-center pb-8">
         <h1 className="font-bold text-3xl text-right">The Next MSA Event! </h1>
           {threeEvents.map((event: any, i: any) => {
@@ -78,7 +78,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <PrayerTable iTimes={times} />
+      <div><PrayerTable iTimes={times} /></div>
       
 
     </div>
@@ -91,42 +91,54 @@ function PrayerTable({ iTimes }: any) {
   return (
     <>
       <h1 className="text-center font-bold text-3xl">Prayer Times</h1>
-      <h6 className="text-center">{iTimes.IslamicDate.day} {iTimes.IslamicDate.month}, {iTimes.IslamicDate.year} -- {iTimes.currentTimeStamp} -- Nashville, TN</h6>
-      <table className="table w-full overflow-x-scroll">
+      <h6 className="text-center">{iTimes.IslamicDate.month} {iTimes.IslamicDate.day}, {iTimes.IslamicDate.year} -- {iTimes.currentTimeStamp} -- Nashville, TN</h6>
+      <table className="table flex flex-column items-center justify-center overflow-auto lg:w-full ">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Fajr</th>
-            <th>Sunrise</th>
-            <th>Zuhr</th>
-            <th>Asr</th>
-            <th>Maghrib</th>
-            <th>Isha</th>
-            <th>First Jummah</th>
-            <th>Second Jummah</th>
+            <th></th>
+            <th>Prayer Time:</th>
+            <th>Iqamah Time:</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Prayer Time:</td>
+            <td>Fajr:</td>
             <td className={iTimes.currentPrayer === "fajr" ? "font-bold" : ""}>{iTimes.prayerTimes.fajr === 'undefined' ? 'Loading' : iTimes.prayerTimes.fajr}</td>
+            <td className={iTimes.currentPrayer === "fajr" ? "font-bold" : ""}>{iTimes.iqammahTimes.fajrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.fajrIqamah}</td>
+          </tr>
+          <tr>
+            <td>Sunrise:</td>
             <td className={iTimes.currentPrayer === "NoPrayerTime" ? "font-bold" : ""}>{iTimes.prayerTimes.sunrise === 'undefined' ? 'Loading' : iTimes.prayerTimes.sunrise}</td>
+            <td className={iTimes.currentPrayer === "NoPrayerTime" ? "font-bold" : ""}>{iTimes.iqammahTimes.sunriseIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.sunriseIqamah}</td>
+          </tr>
+          <tr>
+            <td>Zuhr:</td>
             <td className={iTimes.currentPrayer === "zuhur" ? "font-bold" : ""}>{iTimes.prayerTimes.zuhr === 'undefined' ? 'Loading' : iTimes.prayerTimes.zuhr}</td>
+            <td className={iTimes.currentPrayer === "zuhur" ? "font-bold" : ""}>{iTimes.iqammahTimes.zuhrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.zuhrIqamah}</td>
+          </tr>
+          <tr>
+            <td>Asr:</td>
             <td className={iTimes.currentPrayer === "asr" ? "font-bold" : ""}>{iTimes.prayerTimes.asr === 'undefined' ? 'Loading' : iTimes.prayerTimes.asr}</td>
+            <td className={iTimes.currentPrayer === "asr" ? "font-bold" : ""}>{iTimes.iqammahTimes.asrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.asrIqamah}</td>
+          </tr>
+          <tr>
+            <td>Maghrib:</td>
             <td className={iTimes.currentPrayer === "magrhib" ? "font-bold" : ""}>{iTimes.prayerTimes.maghrib === 'undefined' ? 'Loading' : iTimes.prayerTimes.maghrib}</td>
-            <td className={iTimes.currentPrayer === "isha" ? "font-bold" : ""}>{iTimes.prayerTimes.isha === 'undefined' ? 'Loading' : iTimes.prayerTimes.isha}</td>
-            <td>{iTimes.iqammahTimes.firstJummahTime === 'undefined' ? 'Loading' : iTimes.iqammahTimes.firstJummahTime}</td>
-            <td>{iTimes.iqammahTimes.secondJummahTime === 'undefined' ? 'Loading' : iTimes.iqammahTimes.secondJummahTime}</td>
+            <td className={iTimes.currentPrayer === "magrhib" ? "font-bold" : ""}>{iTimes.maghribIqamah === 'undefined' ? 'Loading' : <>{iTimes.maghribiqammah}</>}</td>
           </tr>
           <tr >
-            <td>Iqamah Time: </td>
-            <td className={iTimes.currentPrayer === "fajr" ? "font-bold" : ""}>{iTimes.iqammahTimes.fajrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.fajrIqamah}</td>
-            <td className={iTimes.currentPrayer === "NoPrayerTime" ? "font-bold" : ""}>{iTimes.iqammahTimes.sunriseIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.sunriseIqamah}</td>
-            <td className={iTimes.currentPrayer === "zuhur" ? "font-bold" : ""}>{iTimes.iqammahTimes.zuhrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.zuhrIqamah}</td>
-            <td className={iTimes.currentPrayer === "asr" ? "font-bold" : ""}>{iTimes.iqammahTimes.asrIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.asrIqamah}</td>
-            <td className={iTimes.currentPrayer === "magrhib" ? "font-bold" : ""}>{iTimes.maghribIqamah === 'undefined' ? 'Loading' : <>{iTimes.maghribiqammah}</>}</td>
-            <td className={iTimes.currentPrayer === "isha" ? "font-bold" : ""}>{iTimes.iqammahTimes.ishaIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.ishaIqamah}</td>
+            <td>Isha: </td>
+              <td className={iTimes.currentPrayer === "isha" ? "font-bold" : ""}>{iTimes.prayerTimes.isha === 'undefined' ? 'Loading' : iTimes.prayerTimes.isha}</td>
+              <td className={iTimes.currentPrayer === "isha" ? "font-bold" : ""}>{iTimes.iqammahTimes.ishaIqamah === 'undefined' ? 'Loading' : iTimes.iqammahTimes.ishaIqamah}</td>
+          </tr>
+          <tr>
+            <td>First Jummah:</td>
+            <td>{iTimes.iqammahTimes.firstJummahTime === 'undefined' ? 'Loading' : iTimes.iqammahTimes.firstJummahTime}</td>
             <td>N/A</td>
+          </tr>
+          <tr>
+            <td>Second Jummah:</td>
+            <td>{iTimes.iqammahTimes.secondJummahTime === 'undefined' ? 'Loading' : iTimes.iqammahTimes.secondJummahTime}</td>
             <td>N/A</td>
           </tr>
         </tbody>

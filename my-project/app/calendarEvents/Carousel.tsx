@@ -18,14 +18,14 @@ export default function Carousel({events}: any) {
     },
     mode: "free-snap",
     slides: {
-      perView: 3,
+      perView: 1,
     },
   })
   
   return (
     <><></>
-      <div className="navigation-wrapper">
-        <div ref={sliderRef} className="keen-slider">
+      <div className="navigation-wrapper lg:bg-red-300">
+        <div ref={sliderRef} className="keen-slider w-fit h-fit rounded-lg ">
         {events.map((event: any, i:any) => {
             return (
               <div className={"keen-slider__slide number-slide"+i+1} key={event.id}>
@@ -110,13 +110,13 @@ function Event({ event }: any) {
             )}
   
             {event.start.dateTime !== undefined ? (
-              <p className="text-red-400">End Time: {hdate.prettyPrint(new Date(event.start.dateTime), { showTime: true })}</p>
+              <p className="">End Time: {hdate.prettyPrint(new Date(event.start.dateTime), { showTime: true })}</p>
             ) : (
               <p></p>
             )}
   
             {event.end.dateTime !== undefined ? (
-              <p className="text-red-400">End Time: {hdate.prettyPrint(new Date(event.end.dateTime), { showTime: true })}</p>
+              <p className="">End Time: {hdate.prettyPrint(new Date(event.end.dateTime), { showTime: true })}</p>
             ) : (
               <p></p>
             )}

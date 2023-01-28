@@ -17,11 +17,10 @@ export default async function EventsPage() {
             
       {events.events.length === 0 ? <h2>No Events to be Displayed</h2>: <Carousel events={events.events}/>}
 
-      <div className="flex items-center justify-center select-none ">
+      <div className="flex items-center justify-center select-none p-8">
         <iframe
           src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FChicago&src=NDUwYWFiNmQwOTdmMmM2ZDY2ZmY0Njk4ZDUxN2M5ODU2ODFhOWVkODk1YzIxMTQwZjAwNWE2YzgwODAwNzYwY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23009688&output=embed"
-          width={1000}
-          height={500}
+          className="w-full h-[50vh]"
         ></iframe>
       </div>
     </div>

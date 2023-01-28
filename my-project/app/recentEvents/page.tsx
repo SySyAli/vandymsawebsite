@@ -14,11 +14,11 @@ export default async function InstagramPage() {
 
     return (
         <div>
-            <h1>Instagram Posts</h1>
-            <div className="grid grid-rows-2 grid-cols-4 gap-100">
+                  <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">Instagram Posts</h1>
+            <div className="flex flex-wrap flex-col items-center justify-center lg:flex-row lg:flew-wrap gap-100">
             {posts.instagramPosts.map((post:any) => { 
                 return(
-                    <div className="h-fit w-fit " key={post.id}><InstagramPost instaPost={post}/></div>
+                    <div className="h-fit w-fit p-4 " key={post.id}><InstagramPost instaPost={post}/></div>
                 )
             })}
             </div>
