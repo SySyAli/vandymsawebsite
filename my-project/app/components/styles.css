@@ -10,27 +10,26 @@
 }
 
 
+.lazy__slide {
+  height: 300px;
+  background: rgb(255, 75, 64);
+  background-color: linear-gradient(
+    0deg,
+    rgba(255, 75, 64, 1) 0%,
+    rgba(255, 154, 63, 1) 100%
+  );
+  background-image: url("https://www.svgrepo.com/show/199948/loading-loader.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100px;
+  min-height: auto;
+}
 
-.arrow {
-  width: 30px;
-  height: 30px;
+.lazy__slide img {
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  fill: #000;
-  cursor: pointer;
 }
 
-.arrow--left {
-  left: 5px;
-}
-
-.arrow--right {
-  left: auto;
-  right: 5px;
-}
-
-.arrow--disabled {
-  fill: rgba(255, 255, 255, 0.5);
-}

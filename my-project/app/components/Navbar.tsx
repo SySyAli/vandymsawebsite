@@ -39,7 +39,7 @@ export default function Navbar() {
               <li>
                 <Link href="/recentEvents"> Recent Events </Link>
               </li>
-              <li className="z-[999]">
+              <li className="z-[999]" tabIndex={0}>
                 <a>
                   Forms
                   <svg
@@ -52,7 +52,7 @@ export default function Navbar() {
                     <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
                   </svg>
                 </a>
-                <ul className="p-2 bg-base-100">
+                <ul className="rounded-box p-2 bg-base-100">
                   <li>
                     <Link href="/"> Khutbah Sign Ups</Link>
                   </li>
@@ -64,7 +64,7 @@ export default function Navbar() {
                   </li>
                 </ul>
               </li>
-              <li className="z-[999]">
+              <li className="z-[999]" tabIndex={0}>
                 <a>
                   Dining Options
                   <svg
@@ -77,7 +77,7 @@ export default function Navbar() {
                     <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
                   </svg>
                 </a>
-                <ul className="p-2 bg-base-100">
+                <ul className="rounded-box p-2 bg-base-100">
                   <li>
                     <Link href="/halalDiningFood">
                       {" "}

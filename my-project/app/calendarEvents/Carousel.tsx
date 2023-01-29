@@ -25,7 +25,7 @@ export default function Carousel({events}: any) {
   return (
     <><></>
       <div className="navigation-wrapper lg:bg-red-300">
-        <div ref={sliderRef} className="keen-slider w-fit h-fit rounded-lg ">
+        <div ref={sliderRef} className="keen-slider w-fit h-fit ">
         {events.map((event: any, i:any) => {
             return (
               <div className={"keen-slider__slide number-slide"+i+1} key={event.id}>
@@ -89,7 +89,7 @@ function Arrow(props: {
 function Event({ event }: any) {
     return (
       <div>
-        <div className="card card-bordered bg-base-200 shadow-xl h-fit w-fit">
+        <div className="card card-bordered bg-base-200 shadow-xl h-fit w-fit items-center justify-center">
           <div className="card-body h-fit w-fit">
             {event.summary !== undefined ? (
               <h2 className="card-title">{event.summary}</h2>

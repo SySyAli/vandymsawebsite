@@ -11,10 +11,8 @@ export default async function EventsPage() {
   const events = await getEvents();
 
   return (
-    <div className="flex gap-y-10 flex-col">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">Events</h1>
-      <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400 text-center">{events.message}</p>
-            
+    <div className="flex flex-col gap-6">
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl">Events</h1>            
       {events.events.length === 0 ? <h2>No Events to be Displayed</h2>: <Carousel events={events.events}/>}
 
       <div className="flex items-center justify-center select-none p-8">

@@ -3,16 +3,15 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'drive.google.com',
+      },
+    ],
+  }
 }
-const withTM = require("next-transpile-modules")([
-  "@fullcalendar/common",
-  "@babel/preset-react",
-  "@fullcalendar/common",
-  "@fullcalendar/daygrid",
-  "@fullcalendar/interaction",
-  "@fullcalendar/react",
-  "@fullcalendar/timegrid",
-]);
 
 
-module.exports = nextConfig, withTM
+module.exports = nextConfig
