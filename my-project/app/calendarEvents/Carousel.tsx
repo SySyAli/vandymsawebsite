@@ -1,40 +1,44 @@
-"use client"
-import React, { useState } from "react"
-import "./styles.css"
-import { useKeenSlider } from "keen-slider/react"
-import "keen-slider/keen-slider.min.css"
-import hdate from 'human-date'
+"use client";
+import React, { useState } from "react";
+import "./styles.css";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
+import hdate from "human-date";
 
-export default function Carousel({events}: any) {
-  const [currentSlide, setCurrentSlide] = React.useState(0)
-  const [loaded, setLoaded] = useState(false)
+export default function Carousel({ events }: any) {
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     initial: 0,
     slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel)
+      setCurrentSlide(slider.track.details.rel);
     },
     created() {
-      setLoaded(true)
+      setLoaded(true);
     },
     mode: "free-snap",
     slides: {
       perView: 1,
     },
-  })
-  
+  });
+
   return (
-    <><></>
-      <div className="navigation-wrapper lg:bg-red-300">
+    <>
+      <></>
+      <div className="navigation-wrapper  lg:bg-red-300">
         <div ref={sliderRef} className="keen-slider w-fit h-fit ">
-        {events.map((event: any, i:any) => {
+          {events.map((event: any, i: any) => {
             return (
-              <div className={"keen-slider__slide number-slide"+i+1} key={event.id}>
+              <div
+                className={"keen-slider__slide number-slide" + i + 1}
+                key={event.id}
+              >
                 <Event event={event} />
               </div>
             );
           })}
         </div>
-        
+
         {loaded && instanceRef.current && (
           <>
             <Arrow
@@ -58,15 +62,15 @@ export default function Carousel({events}: any) {
         )}
       </div>
     </>
-  )
+  );
 }
 
 function Arrow(props: {
-  disabled: boolean
-  left?: boolean
-  onClick: (e: any) => void
+  disabled: boolean;
+  left?: boolean;
+  onClick: (e: any) => void;
 }) {
-  const disabeld = props.disabled ? " arrow--disabled" : ""
+  const disabeld = props.disabled ? " arrow--disabled" : "";
   return (
     <svg
       onClick={props.onClick}
@@ -83,64 +87,73 @@ function Arrow(props: {
         <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
       )}
     </svg>
-  )
+  );
 }
 
 function Event({ event }: any) {
-    return (
-      <div>
-        <div className="card card-bordered bg-base-200 shadow-xl h-fit w-fit items-center justify-center">
-          <div className="card-body h-fit w-fit">
-            {event.summary !== undefined ? (
-              <h2 className="card-title">{event.summary}</h2>
-            ) : (
-              <h2 className="card-title">(No Name)</h2>
-            )}
-  
-            {event.location !== undefined ? (
-              <h4>{event.location}</h4>
-            ) : (
-              <h4>Undefined/Online</h4>
-            )}
-  
-            {event.start.timeZone !== undefined ? (
-              <h6>Timezone: {event.start.timeZone}</h6>
-            ) : (
-              <h6>(No Timezone)</h6>
-            )}
-  
-            {event.start.dateTime !== undefined ? (
-              <p className="">End Time: {hdate.prettyPrint(new Date(event.start.dateTime), { showTime: true })}</p>
-            ) : (
-              <p></p>
-            )}
-  
-            {event.end.dateTime !== undefined ? (
-              <p className="">End Time: {hdate.prettyPrint(new Date(event.end.dateTime), { showTime: true })}</p>
-            ) : (
-              <p></p>
-            )}
-  
-            {event.start.date !== undefined ? (
-              <p>Start Date: {event.start.date}</p>
-            ) : (
-              <p></p>
-            )}
-  
-            {event.end.date !== undefined ? (
-              <p>End Date: {event.end.date}</p>
-            ) : (
-              <p></p>
-            )}
-  
-            {event.description !== undefined ? (
-              <p>{event.description}</p>
-            ) : (
-              <p>Undefined</p>
-            )}
-          </div>
+  return (
+    <div>
+      <div className="card card-bordered bg-base-200 shadow-xl h-fit w-fit items-center justify-center">
+        <div className="card-body h-fit w-fit">
+          {event.summary !== undefined ? (
+            <h2 className="card-title">{event.summary}</h2>
+          ) : (
+            <h2 className="card-title">(No Name)</h2>
+          )}
+
+          {event.location !== undefined ? (
+            <h4>{event.location}</h4>
+          ) : (
+            <h4>Undefined/Online</h4>
+          )}
+
+          {event.start.timeZone !== undefined ? (
+            <h6>Timezone: {event.start.timeZone}</h6>
+          ) : (
+            <h6>(No Timezone)</h6>
+          )}
+
+          {event.start.dateTime !== undefined ? (
+            <p className="">
+              End Time:{" "}
+              {hdate.prettyPrint(new Date(event.start.dateTime), {
+                showTime: true,
+              })}
+            </p>
+          ) : (
+            <p></p>
+          )}
+
+          {event.end.dateTime !== undefined ? (
+            <p className="">
+              End Time:{" "}
+              {hdate.prettyPrint(new Date(event.end.dateTime), {
+                showTime: true,
+              })}
+            </p>
+          ) : (
+            <p></p>
+          )}
+
+          {event.start.date !== undefined ? (
+            <p>Start Date: {event.start.date}</p>
+          ) : (
+            <p></p>
+          )}
+
+          {event.end.date !== undefined ? (
+            <p>End Date: {event.end.date}</p>
+          ) : (
+            <p></p>
+          )}
+
+          {event.description !== undefined ? (
+            <p>{event.description}</p>
+          ) : (
+            <p>Undefined</p>
+          )}
         </div>
       </div>
-    );
-  }
-  
+    </div>
+  );
+}
