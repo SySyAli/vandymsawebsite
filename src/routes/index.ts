@@ -1,37 +1,52 @@
-import express from "express"
-import {getUserTimesAndUpdate, addUserTimesAndUpdate, updateIqamahTime, deleteIqamahTime, getTodayPrayerTime} from "./../controllers/prayertimesjummahupdate"
-import {getHalalRestaurants, addHalalRestaurant, updateHalalRestaurant, deleteHalalRestaurant } from "../controllers/food";
+import express from "express";
+import {
+	getUserTimesAndUpdate,
+	addUserTimesAndUpdate,
+	updateIqamahTime,
+	deleteIqamahTime,
+	getTodayPrayerTime,
+} from "./../controllers/prayertimesjummahupdate";
+/*
+import {
+	getHalalRestaurants,
+	addHalalRestaurant,
+	updateHalalRestaurant,
+	deleteHalalRestaurant,
+} from "../controllers/food";
+*/
 import { getCalendarEvents, getSingleEvent } from "../controllers/calendar";
 import { getInstagramPosts } from "../controllers/instagram";
-import { getHalalFoodFromDataBase  } from "../controllers/vandyHalalFood";
+import { getHalalFoodFromDataBase } from "../controllers/vandyHalalFood";
 import { getGooglePhotoLinks } from "../controllers/pictures";
 const router = express.Router();
 
 // Pictures Links Routes
-router.get("/getPhotoLinks", getGooglePhotoLinks)
+router.get("/getPhotoLinks", getGooglePhotoLinks);
 
 // Instagram Posts
-router.get("/getInstagramPosts", getInstagramPosts)
+router.get("/getInstagramPosts", getInstagramPosts);
 // Calendar Routes
-router.get("/getMSAEvents", getCalendarEvents)
-router.get("/getSingleEvent/:id", getSingleEvent)
+router.get("/getMSAEvents", getCalendarEvents);
+router.get("/getSingleEvent/:id", getSingleEvent);
 
 // food routes
-router.get("/getHalalFood", getHalalFoodFromDataBase)
+router.get("/getHalalFood", getHalalFoodFromDataBase);
 
+/*
 // CRUD operations for Halal Restaurants
 router.get("/getHalalRestaurants", getHalalRestaurants)
 router.post("/addHalalRestaurant", addHalalRestaurant)
 router.put("/updateHalalRestaurant/:id", updateHalalRestaurant)
 router.delete("/deleteHalalRestaurant/:id", deleteHalalRestaurant)
+*/
 
 // get prayerTimes
-// CRUD operations for Iqamah, Jummah, and Jummah Updates 
-router.get("/userTimes", getUserTimesAndUpdate)
-router.post("/add-userTime", addUserTimesAndUpdate)
-router.put("/edit-userTime/:id",updateIqamahTime)
-router.delete("/delete-userTime/:id", deleteIqamahTime)
+// CRUD operations for Iqamah, Jummah, and Jummah Updates
+router.get("/userTimes", getUserTimesAndUpdate);
+router.post("/add-userTime", addUserTimesAndUpdate);
+router.put("/edit-userTime/:id", updateIqamahTime);
+router.delete("/delete-userTime/:id", deleteIqamahTime);
 
-router.get("/prayerTimes", getTodayPrayerTime)
+router.get("/prayerTimes", getTodayPrayerTime);
 
-export default router
+export default router;
