@@ -1,4 +1,5 @@
 import Carousel from "./components/Carousel";
+import NextJsCarousel from "../components/newCarousel";
 
 async function getInstagramPosts() {
   const url = "http://localhost:4000";
@@ -28,6 +29,8 @@ export default async function InstagramPage() {
   );
 }
 
+
+
 function InstagramPost({ instaPost }: any) {
   let url: any = [];
   if (instaPost.media_type === "CAROUSEL_ALBUM") {
@@ -39,11 +42,7 @@ function InstagramPost({ instaPost }: any) {
     <>
       <div className="card glass bg-base-300 shadow-xl w-[250px] h-[500px]">
         {instaPost.media_type === "CAROUSEL_ALBUM" ? (
-          <Carousel
-            className="bg-red-400 rounded-t-lg"
-            children={url}
-            id={instaPost.id}
-          />
+          <div className="bg-red-400 rounded-lg"><NextJsCarousel links={url}/></div>
         ) : instaPost.media_type === "IMAGE" ? (
           <figure>
             <img src={instaPost.media_url} />

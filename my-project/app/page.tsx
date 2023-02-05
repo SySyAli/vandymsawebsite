@@ -1,5 +1,4 @@
 import "./globals.css";
-import Carousel from "./components/Carousel";
 import NewCarousel from "./components/newCarousel";
 import hdate from "human-date";
 // 'tw-elements'

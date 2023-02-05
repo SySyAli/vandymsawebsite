@@ -43,6 +43,7 @@ router.delete("/deleteHalalRestaurant/:id", deleteHalalRestaurant)
 // get prayerTimes
 // CRUD operations for Iqamah, Jummah, and Jummah Updates
 router.get("/userTimes", getUserTimesAndUpdate);
+//
 router.post("/add-userTime", addUserTimesAndUpdate);
 router.put("/edit-userTime/:id", updateIqamahTime);
 router.delete("/delete-userTime/:id", deleteIqamahTime);
