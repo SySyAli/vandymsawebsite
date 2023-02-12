@@ -10,17 +10,31 @@ import prayertimesapi from "../../models/prayertimesapi"
 
 async function refershPrayerTimes(){
     try {
-        const times: PrayerTime[] = await PrayerTimes.find()
+
+        const times: PrayerTime[] = await PrayerTimes.find().sort ( { updatedAt : 1} )
         const date = new Date()
+        let parameters;
         // Annex Coordinates: (36.14479431053963, -86.80420024114342)
-        const parameters = await {
-            "latitude": times[0].latitude,
-            "longitude": times[0].longitude,
-            "method": times[0].method,
-            "month":date.getMonth()+1,
-            "year": date.getFullYear(),
-            "maghribDelay": times[0].maghribDelay
+        if(times.length === 0){
+            parameters = await {
+                "latitude": 36.14479431053963,
+                "longitude": -86.80420024114342,
+                "method": 2,
+                "month":date.getMonth()+1,
+                "year": date.getFullYear(),
+                "maghribDelay": "10"
+            }
+        } else{
+            parameters = await {
+                "latitude": times[0].latitude,
+                "longitude": times[0].longitude,
+                "method": times[0].method,
+                "month":date.getMonth()+1,
+                "year": date.getFullYear(),
+                "maghribDelay": times[0].maghribDelay
+            }
         }
+        
         //console.log(date.toString())
         const data = await axois.get(`http://api.aladhan.com/v1/calendar?latitude=${parameters.latitude}&longitude=${parameters.longitude}&method=${parameters.method}&month=${parameters.month}&year=${parameters.year}`)
         const currTime = await data.data.data[date.getDate()-1]

@@ -33,13 +33,27 @@ async function refreshToken(){
 }
 
 
-
-async function getInstagramPosts(req: Request, res: Response){
+async function refreshPosts(){
     try {
         // GET IMAGES using basic facebook api
         const aToken = await Instagrams.find()
         const responseData = await axios.get(`https://graph.instagram.com/me/media?fields=username,caption,permalink,media_type,media_url,children%7Bmedia_url%7D&access_token=${aToken[0].access_token}`)
-        res.status(200).json({"message":"instagram posts", "instagramPosts": responseData.data.data.slice(0,11)})
+        // update mongodb
+        const data = await Instagrams.findByIdAndUpdate({"_id": aToken[0]._id}, {$set: {posts: responseData.data.data.slice(0,11)}})
+        console.log("UPDATED Posts" + data)
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+
+
+async function getInstagramPosts(req: Request, res: Response){
+    try {
+        // GET IMAGES using basic facebook api
+        const data = await Instagrams.find()
+        res.status(200).json({"message":"instagram posts", "instagramPosts": data[0].posts})
 
     } catch (error) {
         console.log(error)
@@ -48,4 +62,4 @@ async function getInstagramPosts(req: Request, res: Response){
 }
 
 
-export {refreshToken, getInstagramPosts}
+export {refreshToken, getInstagramPosts, refreshPosts}

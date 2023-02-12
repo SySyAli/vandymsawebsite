@@ -5,7 +5,7 @@ import mongoose from "mongoose"
 import cors from "cors"
 import routes from "./routes"
 import cron from "node-cron"
-import { refreshToken } from './controllers/instagram'
+import { refreshPosts, refreshToken } from './controllers/instagram'
 import { refreshFood } from './controllers/vandyHalalFood'
 import {refershPrayerTimes} from  './controllers/prayertimesjummahupdate'
 
@@ -36,10 +36,15 @@ cron.schedule('0 0 3 * * *', async () => {
 cron.schedule('0 0 0 * * *', async () => {
   await refershPrayerTimes()
 });
+cron.schedule('*/10 * * * *', async () => {
+  await refreshPosts()
+});
+
 
 mongoose.set('strictQuery', true)
 mongoose.connect('mongodb://localhost:27017/admin').then(async () =>{
   await refreshToken()
+  await refreshPosts()
   await refershPrayerTimes()
   await refreshFood()
 }).then(() =>

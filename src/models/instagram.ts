@@ -13,7 +13,11 @@ const InstagramSchema = new Schema({
     expires_in:{
         type: String,
         required: true
+    }, posts:{
+        type: Array,
+        required: true
     }
+
 },
 {timestamps:true})
 
