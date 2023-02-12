@@ -80,23 +80,23 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row w-full gap-6">
-          <div className="hidden lg:block lg:w-[50%]"><NewCarousel links={photoUrls}/></div>
-          <div className="lg:w-[50%] px-2 flex flex-col gap-6 w-full items-center justify-center pb-6">
+        <div className="flex flex-col lg:flex-row lg:h-full w-full gap-6">
+          <div className="flex flex-col gap-6 w-full items-center justify-center lg:h-fit lg:w-[50%] px-2 lg:rounded-lg"><PrayerTable iTimes={times} /></div>
+          <div className="flex flex-col lg:w-[50%] lg:h-full px-2 gap-6 w-full items-center justify-center pb-6">
             <h1 className="font-bold text-3xl text-right">
               The Next MSA Event!{" "}
             </h1>
             {threeEvents.map((event: any, i: any) => {
               return (
                 <div key={i}>
-                  <Event event={event} />
+                  <Event className="h-full" event={event} />
                 </div>
               );
             })}
           </div>
         </div>
         
-        <div className="lg:flex lg:align-center lg:items-center lg:justify-center w-full px-2 mb-6 lg:max-w-[300px]"><PrayerTable iTimes={times} /></div>
+        <div className="hidden lg:flex lg:align-center rounded-lg lg:items-center lg:justify-center lg:h-fit w-full px-2 mb-6 "><NewCarousel links={photoUrls}/></div>
       </div>
     </div>
   );
@@ -240,8 +240,8 @@ function PrayerTable({ iTimes }: any) {
 function Event({ event }: any) {
   return (
     <div>
-      <div className="card card-bordered glass bg-base-200 shadow-xl h-fit w-fit items-center justify-center">
-        <div className="card-body">
+      <div className="card card-bordered glass bg-base-200 shadow-xl lg:h-full w-fit items-center justify-center">
+        <div className="card-body h-full">
           {event.summary !== undefined ? (
             <h2 className="card-title">{event.summary}</h2>
           ) : (

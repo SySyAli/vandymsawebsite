@@ -40,7 +40,7 @@ async function refreshPosts(){
         const responseData = await axios.get(`https://graph.instagram.com/me/media?fields=username,caption,permalink,media_type,media_url,children%7Bmedia_url%7D&access_token=${aToken[0].access_token}`)
         // update mongodb
         const data = await Instagrams.findByIdAndUpdate({"_id": aToken[0]._id}, {$set: {posts: responseData.data.data.slice(0,11)}})
-        console.log("UPDATED Posts" + data)
+        console.log("UPDATED Posts")
     } catch (error) {
         console.log(error)
         throw error

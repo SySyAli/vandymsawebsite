@@ -1,6 +1,6 @@
 import {google} from 'googleapis'
 import {Request, Response} from "express"
-import { link } from 'fs'
+import googleapis from '../../models/googleapis'
 
 const GOOGLE_PRIVATE_KEY=process.env.GOOGLE_DRIVE_API_KEY
 const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_DRIVE_CLIENT_EMAIL
@@ -20,12 +20,11 @@ const scopes = [
 
   const drive = google.drive({ version: "v3", auth })
 
-async function getGooglePhotoLinks(req: Request, res: Response){
+async function getAllPhotoLinks(){
     try {
         const linksArray: any = []
         // get ids, then put it into links
         const results = await drive.files.list({q:`'${process.env.GOOGLE_IMAGE_FOLDER}' in parents`})
-        console.log(results.data.files)
         if(results.data.files !== undefined){
             // && results.data.files[i].mimeType.indexOf("jpeg") > 0
             for(let i = 0; i < results.data.files.length; i++){
@@ -33,9 +32,9 @@ async function getGooglePhotoLinks(req: Request, res: Response){
                     linksArray.push(`https://drive.google.com/uc?export=view&id=${results.data.files[i].id}`) 
                 }
             }
-            res.status(200).json({"message": "PHOTO LINKS", "results": linksArray})
+            return linksArray
         } else{
-            res.status(200).json({"message": "NO PHOTO LINKS", "results": linksArray})
+            return []
         }
 
     } catch (error) {
@@ -43,4 +42,17 @@ async function getGooglePhotoLinks(req: Request, res: Response){
         throw error
     }
 }
-export {getGooglePhotoLinks}
+
+
+async function getGooglePhotoLinks(req: Request, res: Response){
+    try {
+        
+      const googleAPISDB = await googleapis.find()
+      res.status(200).json({"results": googleAPISDB[0].photoLinks})
+
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+export {getGooglePhotoLinks, getAllPhotoLinks}

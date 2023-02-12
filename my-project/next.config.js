@@ -9,6 +9,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'drive.google.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'scontent-atl3-2.cdninstagram.com',
+      },
+      
     ],
   }
 }

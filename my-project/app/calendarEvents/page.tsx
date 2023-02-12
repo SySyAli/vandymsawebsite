@@ -12,7 +12,7 @@ export default async function EventsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="pl-6 mb-4 text-4xl font-extrabold leading-none tracking-tight ">
+      <h1 className="pl-6 mb-4 text-4xl text-center font-extrabold leading-none tracking-tight ">
         Events
       </h1>
       {/*       <div className="w-full p-1">

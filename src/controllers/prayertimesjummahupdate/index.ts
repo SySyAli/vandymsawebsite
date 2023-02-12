@@ -285,7 +285,7 @@ function addingMinutes(time:string, minutes:number){
 
 }
 
-function findCurrentSalah(currentTime:string, prayerTimes:any){
+function findCurrentSalah(currentTime:string, prayerTimes: any){
     //console.log(currentTime)
     //console.log(prayerTimes)
     // make a bunch date objs until i find the first that it is bigger

@@ -54,13 +54,13 @@ export default function Navbar() {
                 </a>
                 <ul className="rounded-box p-2 bg-base-100">
                   <li>
-                    <Link href="/"> Khutbah Sign Ups</Link>
+                    <Link href="/forms#khutbah"> Khutbah Sign Ups</Link>
                   </li>
                   <li>
-                    <Link href="/"> Feedback Form</Link>
+                    <Link href="/forms#feedback"> Feedback Form</Link>
                   </li>
                   <li>
-                    <Link href="/"> Roommate Selection Form</Link>
+                    <Link href="/forms#roommate"> Roommate Selection Form</Link>
                   </li>
                 </ul>
               </li>
@@ -92,9 +92,6 @@ export default function Navbar() {
                   </li>
                 </ul>
               </li>
-              <li>
-                <Link href="/"> Donate </Link>
-              </li>
             </ul>
           </div>
           <div className="avatar">
@@ -111,7 +108,7 @@ export default function Navbar() {
               <Link href="/"> Home </Link>
             </li>
             <li>
-              <Link href="/">About Us</Link>
+              <Link href="/aboutUs">About Us</Link>
             </li>
             <li>
               <Link href="/calendarEvents"> Future Events </Link>
@@ -134,13 +131,13 @@ export default function Navbar() {
               </a>
               <ul className="p-2 bg-base-100">
                 <li>
-                  <Link href="/"> Khutbah Sign Ups</Link>
+                  <Link href="/forms#khutbah"> Khutbah Sign Ups</Link>
                 </li>
                 <li>
-                  <Link href="/"> Feedback Form</Link>
+                  <Link href="/forms#feedback"> Feedback Form</Link>
                 </li>
                 <li>
-                  <Link href="/"> Roommate Selection Form</Link>
+                  <Link href="/forms#roommate"> Roommate Selection Form</Link>
                 </li>
               </ul>
             </li>
@@ -168,9 +165,6 @@ export default function Navbar() {
                   </Link>
                 </li>
               </ul>
-            </li>
-            <li>
-              <Link href="/"> Donate </Link>
             </li>
           </ul>
         </div>

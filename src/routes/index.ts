@@ -27,7 +27,7 @@ router.get("/getPhotoLinks", getGooglePhotoLinks);
 router.get("/getInstagramPosts", getInstagramPosts);
 // Calendar Routes
 router.get("/getMSAEvents", getCalendarEvents);
-router.get("/getSingleEvent/:id", getSingleEvent);
+//router.get("/getSingleEvent/:id", getSingleEvent);
 
 // food routes
 router.get("/getHalalFood", getHalalFoodFromDataBase);
