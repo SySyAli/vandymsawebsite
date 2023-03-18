@@ -11,7 +11,7 @@ import {refershPrayerTimes, refreshIqamahTimes} from  './controllers/prayertimes
 import { refreshCalendarEventsPhotos } from './controllers/calendar'
 
 const app: Express = express();
-
+const uri = process.env.MONGODB_URI
 // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 const PORT: string | number = process.env.PORT || 4000
 
@@ -53,19 +53,26 @@ cron.schedule('*/5 * * * *', async () => {
 
 
 mongoose.set('strictQuery', true)
-mongoose.connect('mongodb://localhost:27017/admin').then(async () =>{
-  await refreshCalendarEventsPhotos()
-  await refreshToken()
-  await refreshPosts()
-  await refreshIqamahTimes()
-  await refershPrayerTimes()
-  await refreshFood()
-}).then(() =>
-app.listen(PORT, async () =>
-  console.log(`Server running on http://localhost:${PORT}`)
-)
-)
-.catch(error => {
-throw error
-})
+// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+if(uri){
+  mongoose.connect(uri).then(async () =>{
+    await refreshCalendarEventsPhotos()
+    await refreshToken()
+    await refreshPosts()
+    await refreshIqamahTimes()
+    await refershPrayerTimes()
+    await refreshFood()
+  }).then(() =>
+  app.listen(PORT, async () =>
+    console.log(`Server running on http://localhost:${PORT}`)
+  )
+  )
+  .catch(error => {
+  throw error
+  })
+} else{
+  console.log("No URI")
+  throw new Error("No URI - SERVER FAILED")
+}
+
 
