@@ -127,7 +127,7 @@ async function scraping(diningHallName: string) {
         Brunch: { message: "", food: {} },
       }
     let count: any;
-
+    // to show  page use  {headless: false }
     const browser = await chromium.launch();
     const page = await browser.newPage();
     await page.goto("https://netnutrition.cbord.com/nn-prod/vucampusdining");
@@ -194,12 +194,13 @@ async function scraping(diningHallName: string) {
     
     await page.waitForTimeout(5000);
     const lhtml = await page.content();
+    //console.log(lhtml)
     if (lhtml.indexOf("Item Name") === -1) {
       //console.log(diningHallName + " LUNCH HAS NO ITEMS");
       information.Lunch.message = "LUNCH HAS NO ITEMS"
     } else {
       const buttons = [];
-      //console.log(diningHallName + " LUNCH HAS ITEMS");
+      console.log(diningHallName + " LUNCH HAS ITEMS");
       information.Lunch.message = "LUNCH HAS ITEMS"
       /* Code that will get table of halal items */
       await page

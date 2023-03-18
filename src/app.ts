@@ -7,7 +7,7 @@ import routes from "./routes"
 import cron from "node-cron"
 import { refreshPosts, refreshToken } from './controllers/instagram'
 import { refreshFood } from './controllers/vandyHalalFood'
-import {refershPrayerTimes} from  './controllers/prayertimesjummahupdate'
+import {refershPrayerTimes, refreshIqamahTimes} from  './controllers/prayertimesjummahupdate'
 import { refreshCalendarEventsPhotos } from './controllers/calendar'
 
 const app: Express = express();
@@ -34,6 +34,10 @@ cron.schedule('0 0 3 * * *', async () => {
     await refershPrayerTimes()
 });
 
+cron.schedule('0 0 5 * * *', async () => {
+  await refershPrayerTimes()
+});
+
 // cron call - runs at 12 AM everyday
 cron.schedule('0 0 0 * * *', async () => {
   await refershPrayerTimes()
@@ -41,9 +45,10 @@ cron.schedule('0 0 0 * * *', async () => {
 
 // cron call - runs every 10 minutes
 cron.schedule('*/5 * * * *', async () => {
+  await refreshIqamahTimes()
   await refreshPosts()
   await refreshCalendarEventsPhotos()
-  console.log("CRONJOB: Refreshed Posts and Calendar Events Photos")
+  console.log("CRONJOB: Refreshed Posts and Calendar Events Photos, Iqamah Times")
 });
 
 
@@ -52,6 +57,7 @@ mongoose.connect('mongodb://localhost:27017/admin').then(async () =>{
   await refreshCalendarEventsPhotos()
   await refreshToken()
   await refreshPosts()
+  await refreshIqamahTimes()
   await refershPrayerTimes()
   await refreshFood()
 }).then(() =>

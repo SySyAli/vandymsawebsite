@@ -1,9 +1,10 @@
 import express from "express";
+
 import {
-	getUserTimesAndUpdate,
-	addUserTimesAndUpdate,
-	updateIqamahTime,
-	deleteIqamahTime,
+	//getUserTimesAndUpdate,
+	//addUserTimesAndUpdate,
+	//updateIqamahTime,
+	//deleteIqamahTime,
 	getTodayPrayerTime,
 } from "./../controllers/prayertimesjummahupdate";
 /*
@@ -14,7 +15,9 @@ import {
 	deleteHalalRestaurant,
 } from "../controllers/food";
 */
-import { getCalendarEvents, getSingleEvent } from "../controllers/calendar";
+import {
+	getCalendarEvents, //getSingleEvent
+} from "../controllers/calendar";
 import { getInstagramPosts } from "../controllers/instagram";
 import { getHalalFoodFromDataBase } from "../controllers/vandyHalalFood";
 import { getGooglePhotoLinks } from "../controllers/pictures";
@@ -41,12 +44,10 @@ router.delete("/deleteHalalRestaurant/:id", deleteHalalRestaurant)
 */
 
 // get prayerTimes
-// CRUD operations for Iqamah, Jummah, and Jummah Updates
-router.get("/userTimes", getUserTimesAndUpdate);
-//g
-router.post("/add-userTime", addUserTimesAndUpdate);
-router.put("/edit-userTime/:id", updateIqamahTime);
-router.delete("/delete-userTime/:id", deleteIqamahTime);
+// CRUD operations for Iqamah, Jummah, and Jummah Updates - get is added to prayerTimes route
+//router.post("/add-userTime", addUserTimesAndUpdate);
+//router.put("/edit-userTime/:id", updateIqamahTime);
+//router.delete("/delete-userTime/:id", deleteIqamahTime);
 
 router.get("/prayerTimes", getTodayPrayerTime);
 

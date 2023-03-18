@@ -61,7 +61,6 @@ export default async function Home() {
                         </div>
                 })}
   */
-	// TODO: JUMMAH UPDATE NEEDS TO BE ADDED
 	// <MyGallery links={photoUrls}/>
 	return (
 		<div>

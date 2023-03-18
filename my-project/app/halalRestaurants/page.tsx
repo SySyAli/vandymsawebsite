@@ -19,6 +19,7 @@ export default async function HalalRestaurants() {
 					<li>Sitar Indian Cusine</li>
 					<li>Bombay Palace</li>
 					<li>Inchin's Bamboo Garden</li>
+					<li>Nawabi Hyderabad House - Biryani Place Nashville</li>
 				</ul>
 			</div>
 			<div>
