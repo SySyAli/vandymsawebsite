@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import * as dotenv from 'dotenv' 
 dotenv.config()
 import express, { Express } from "express"
@@ -11,7 +12,7 @@ import {refershPrayerTimes, refreshIqamahTimes} from  './controllers/prayertimes
 import { refreshCalendarEventsPhotos } from './controllers/calendar'
 
 const app: Express = express();
-const uri = process.env.MONGODB_URI
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/admin"
 // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 const PORT: string | number = process.env.PORT || 4000
 
