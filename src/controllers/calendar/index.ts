@@ -46,7 +46,7 @@ async function getSingleEvent(req: Request, res: Response) {
 			}
 		);
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		throw error;
 	}
 }
@@ -83,7 +83,7 @@ async function refreshCalendarEventsPhotos() {
 			);
 		}
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		throw error;
 	}
 }

@@ -40,8 +40,9 @@ export default async function aboutUs() {
 					The Vanderbilt MSA is proud to be part of a vibrant and supportive
 					community of organizations that share our mission to promote
 					diversity, inclusivity, and cultural exchange on campus. Some adjacent
-					organizations include: Pakistani Student Association, Middle Eastern
-					Student Assocaition, African Student Union, Ethiopian-Eritrean Student
+					organizations include: Pakistani Student Association, Vanderbilt
+					Association of Bangladeshi Students, Middle Eastern Student
+					Assocaition, African Student Union, Ethiopian-Eritrean Student
 					Association, Vanderbilt Interfaith Council, Asian American Student
 					Association, South Asian Cultural Exchange, Multicultural Leadership
 					Council, and Dores in Solidarity with Palestine.
