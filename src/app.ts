@@ -20,10 +20,9 @@ const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/admin";
 // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 const PORT: string | number = process.env.PORT || 4000;
 
-if (process.env.GOOGLE_IMAGE_FOLDER) {
-	console.log("It is set!");
-} else {
-	console.log("No set!");
+console.log(process.env.GOOGLE_CALENDAR_ID)
+if (!process.env.GOOGLE_CALENDAR_ID) {
+	console.log("It is NOT set!");
 }
 
 app.use(express.json());
