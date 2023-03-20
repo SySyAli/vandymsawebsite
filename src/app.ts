@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import * as dotenv from "dotenv";
-dotenv.config();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const dotenv = require("dotenv");
 import express, { Express } from "express";
-import mongoose from "mongoose";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const mongoose = require("mongoose");
 import cors from "cors";
 import routes from "./routes";
 import cron from "node-cron";
@@ -13,17 +14,17 @@ import {
 	refreshIqamahTimes,
 } from "./controllers/prayertimesjummahupdate";
 import { refreshCalendarEventsPhotos } from "./controllers/calendar";
+import {MONGODB_URI} from "./config.json";
+import {refreshPhotos} from "./controllers/pictures";
 
 const app: Express = express();
-const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/admin";
+const uri = MONGODB_URI || "mongodb://localhost:27017/admin";
 
 // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 const PORT: string | number = process.env.PORT || 4000;
 
-console.log(process.env.GOOGLE_CALENDAR_ID)
-if (!process.env.GOOGLE_CALENDAR_ID) {
-	console.log("It is NOT set!");
-}
+dotenv.config();
+
 
 app.use(express.json());
 app.use(cors());
@@ -54,10 +55,18 @@ cron.schedule("0 0 0 * * *", async () => {
 // cron call - runs every 10 minutes
 cron.schedule("*/5 * * * *", async () => {
 	await refreshIqamahTimes();
-	await refreshPosts();
 	await refreshCalendarEventsPhotos();
 	console.log(
 		"CRONJOB: Refreshed Posts and Calendar Events Photos, Iqamah Times"
+	);
+});
+
+// cron - call every hour
+cron.schedule("0 * * * *", async () => {
+	await refreshPhotos();
+  await refreshPosts();
+	console.log(
+		"CRONJOB: Refreshed Cloudinary Image URLS"
 	);
 });
 
@@ -68,21 +77,23 @@ mongoose.set("strictQuery", true);
 if (uri) {
 	//
 	mongoose
-		.connect("mongodb://localhost:27017/admin")
+		.connect(uri)
 		.then(async () => {
-			await refreshCalendarEventsPhotos();
-			await refreshToken();
-			await refreshPosts();
+			//await refreshCalendarEventsPhotos();
+      await refreshPhotos();
 			await refreshIqamahTimes();
 			await refershPrayerTimes();
 			await refreshFood();
+      await refreshToken();
+			await refreshPosts();
 		})
 		.then(() =>
 			app.listen(PORT, async () =>
 				console.log(`Server running on http://localhost:${PORT}`)
 			)
 		)
-		.catch((error) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		.catch((error: any) => {
 			throw error;
 		});
 } else {

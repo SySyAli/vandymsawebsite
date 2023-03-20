@@ -20,11 +20,11 @@ import {
 } from "../controllers/calendar";
 import { getInstagramPosts } from "../controllers/instagram";
 import { getHalalFoodFromDataBase } from "../controllers/vandyHalalFood";
-import { getGooglePhotoLinks } from "../controllers/pictures";
+import { getPictureLinks } from "../controllers/pictures";
 const router = express.Router();
 
 // Pictures Links Routes
-router.get("/getPhotoLinks", getGooglePhotoLinks);
+router.get("/getPhotoLinks", getPictureLinks);
 
 // Instagram Posts
 router.get("/getInstagramPosts", getInstagramPosts);

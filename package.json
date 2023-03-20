@@ -2,10 +2,10 @@
   "name": "vandymsawebsite",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
-    "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\""
+    "start": "concurrently \"tsc -w\" \"nodemon\""
   },
   "repository": {
     "type": "git",
@@ -26,11 +26,12 @@
     "axios": "^1.3.4",
     "body-parser": "^1.20.1",
     "cheerio": "^1.0.0-rc.12",
-    "cloudinary": "^1.33.0",
+    "cloudinary": "^1.35.0",
     "concurrently": "^7.6.0",
     "cors": "^2.8.5",
     "cron": "^2.1.0",
     "dotenv": "^16.0.3",
+    "dotenv-extended": "^2.9.0",
     "express": "^4.18.2",
     "googleapis": "^105.0.0",
     "instagram-web-api": "^2.2.2",

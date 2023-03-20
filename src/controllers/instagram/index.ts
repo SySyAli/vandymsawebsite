@@ -2,7 +2,7 @@ import {Request, Response} from "express"
 import axios from "axios"
 import {InstagramType} from "../../types/instagram"
 import Instagrams from "../../models/instagram"
-
+import {INSTAGRAM_TOKEN} from "../../config.json"
 
 async function refreshToken(){
     try {
@@ -10,7 +10,7 @@ async function refreshToken(){
         const count = await Instagrams.count()
         if(count == 0){
             const toBeAdded: InstagramType = new Instagrams({
-                "access_token":process.env.INSTAGRAM_TOKEN,
+                "access_token": INSTAGRAM_TOKEN,
                 "token_type":"bearer",
                 // Random Number so it won't be angry
                 "expires_in": 10000,

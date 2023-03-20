@@ -2,12 +2,12 @@
 import { Request, Response } from "express";
 import { google } from "googleapis";
 import googleapis from "../../models/googleapis";
-import { getAllPhotoLinks } from "../pictures";
+
+import {GOOGLE_PRIVATE_KEY, GOOGLE_CLIENT_EMAIL, GOOGLE_CALENDAR_ID} from "../../config.json";
+
 
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
-const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
-const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_CLIENT_EMAIL;
-const GOOGLE_CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;
+
 
 const jwtClient = new google.auth.JWT(
 	GOOGLE_CLIENT_EMAIL,
@@ -20,6 +20,7 @@ const calendar = google.calendar({
 	version: "v3",
 	auth: jwtClient,
 });
+
 
 async function getSingleEvent(req: Request, res: Response) {
 	try {
@@ -64,7 +65,8 @@ async function refreshCalendarEventsPhotos() {
 			});
 
 		const googleAPISDB = await googleapis.find();
-		let photoLinks = await getAllPhotoLinks();
+		//let photoLinks = await getAllPhotoLinks();
+		let photoLinks = []
 		photoLinks = photoLinks.slice(0, 10);
 		if (googleAPISDB.length === 0) {
 			const newGoogleAPISDB = new googleapis({
