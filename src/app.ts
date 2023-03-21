@@ -14,7 +14,7 @@ import {
 	refreshIqamahTimes,
 } from "./controllers/prayertimesjummahupdate";
 //import { refreshCalendarEventsPhotos } from "./controllers/calendar";
-import CONFIG from "./Config";
+import CONFIG from "./CONFIG.json";
 import { refreshPhotos } from "./controllers/pictures";
 
 const app: Express = express();

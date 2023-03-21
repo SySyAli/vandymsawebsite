@@ -8,6 +8,7 @@
       "esModuleInterop": true,
       "forceConsistentCasingInFileNames": true,
       "resolveJsonModule": true,
+      "moduleResolution": "node"
     },
     "include": ["src/**/*"],
     "exclude": ["src/types/*.ts", "node_modules", ".vscode"]

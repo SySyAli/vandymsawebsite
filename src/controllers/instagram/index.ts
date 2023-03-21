@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import axios from "axios";
 import { InstagramType } from "../../types/instagram";
 import Instagrams from "../../models/instagram";
-import CONFIG from "../../Config"
+import CONFIG from "../../CONFIG.json"
 
 async function refreshToken() {
 	try {
 		// If first time w/server
 		const count = await Instagrams.count();
 		if (count == 0) {
-			const toBeAdded: InstagramType = new Instagrams({
+			const toBeAdded: any = new Instagrams({
 				access_token: CONFIG.INSTAGRAM_TOKEN,
 				token_type: "bearer",
 				// Random Number so it won't be angry
