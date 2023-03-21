@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Request, Response } from "express";
 import axios from "axios";
 import { InstagramType } from "../../types/instagram";
 import Instagrams from "../../models/instagram";
-import CONFIG from "../../CONFIG.json"
+const CONFIG = require("./CONFIG.json");
 
 async function refreshToken() {
 	try {

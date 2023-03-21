@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const dotenv = require("dotenv");
 import express, { Express } from "express";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const mongoose = require("mongoose");
+const CONFIG = require("./CONFIG.json");
 import cors from "cors";
 import routes from "./routes";
 import cron from "node-cron";
@@ -14,7 +16,6 @@ import {
 	refreshIqamahTimes,
 } from "./controllers/prayertimesjummahupdate";
 //import { refreshCalendarEventsPhotos } from "./controllers/calendar";
-import CONFIG from "./CONFIG.json";
 import { refreshPhotos } from "./controllers/pictures";
 
 const app: Express = express();

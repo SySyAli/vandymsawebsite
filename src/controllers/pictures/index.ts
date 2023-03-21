@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { google } from "googleapis";
 import { Request, Response } from "express";
 import googleapis from "../../models/googleapis";
 import { v2 as cloudinary } from "cloudinary";
-import CONFIG from "../../CONFIG.json";
+const CONFIG = require("./CONFIG.json");
 import PhotoLinks from "../../models/photoLinks";
 
 cloudinary.config({
