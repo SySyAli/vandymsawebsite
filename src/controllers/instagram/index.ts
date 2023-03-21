@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import axios from "axios";
 import { InstagramType } from "../../types/instagram";
 import Instagrams from "../../models/instagram";
-const CONFIG = require("../..CONFIG.json");
+const CONFIG = require("../../CONFIG.json");
 
 async function refreshToken() {
 	try {
