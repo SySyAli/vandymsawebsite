@@ -35,6 +35,10 @@ router.get("/getMSAEvents", getCalendarEvents);
 // food routes
 router.get("/getHalalFood", getHalalFoodFromDataBase);
 
+router.get('/', (req, res) => {
+	res.send('Hello World!')
+  })
+
 /*
 // CRUD operations for Halal Restaurants
 router.get("/getHalalRestaurants", getHalalRestaurants)
