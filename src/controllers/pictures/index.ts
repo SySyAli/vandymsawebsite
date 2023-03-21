@@ -2,22 +2,13 @@ import { google } from "googleapis";
 import { Request, Response } from "express";
 import googleapis from "../../models/googleapis";
 import { v2 as cloudinary } from "cloudinary";
-import {
-	GOOGLE_DRIVE_CLIENT_EMAIL,
-	GOOGLE_PRIVATE_KEY,
-	GOOGLE_IMAGE_FOLDER,
-} from "../../config.json";
-import {
-	CLOUDINARY_API_KEY,
-	CLOUDINARY_API_SECRET,
-	CLOUDINARY_CLOUD_NAME,
-} from "../../config.json";
+import CONFIG from "../../Config";
 import PhotoLinks from "../../models/photoLinks";
 
 cloudinary.config({
-	cloud_name: CLOUDINARY_CLOUD_NAME,
-	api_key: CLOUDINARY_API_KEY,
-	api_secret: CLOUDINARY_API_SECRET,
+	cloud_name: CONFIG.CLOUDINARY_CLOUD_NAME,
+	api_key: CONFIG.CLOUDINARY_API_KEY,
+	api_secret: CONFIG.CLOUDINARY_API_SECRET,
 	secure: true,
 });
 
@@ -42,8 +33,8 @@ async function getImages() {
 		for (let i = 0; i < result.resources.length; i++) {
 			const newImage = await cloudinary.image(result.resources[i].public_id, {
 				format: "webp",
-				width: 750,
-				height: 750,
+				width: 720,
+				height: 420,
 				crop: "fill",
 			});
 			const stringURL = newImage.substring(
@@ -64,18 +55,21 @@ async function getImages() {
 async function refreshPhotos() {
 	try {
 		//
-        const newURLS = await PhotoLinks.find();
-        if(newURLS.length === 0){
-            const newPhotoLinks = new PhotoLinks({
-                links: await getImages(),
-            });
-            await newPhotoLinks.save();
-            console.log("created new pictures")
-        } else{
-            const newURLSREPLACE = await getImages();
-            const data = await PhotoLinks.findByIdAndUpdate({"_id": newURLS[0]._id}, {$set: {links: newURLSREPLACE}})
-            console.log("updated pictures")
-        }
+		const newURLS = await PhotoLinks.find();
+		if (newURLS.length === 0) {
+			const newPhotoLinks = new PhotoLinks({
+				links: await getImages(),
+			});
+			await newPhotoLinks.save();
+			console.log("created new pictures");
+		} else {
+			const newURLSREPLACE = await getImages();
+			const data = await PhotoLinks.findByIdAndUpdate(
+				{ _id: newURLS[0]._id },
+				{ $set: { links: newURLSREPLACE } }
+			);
+			console.log("updated pictures");
+		}
 	} catch (error) {
 		console.error(error);
 		throw error;
@@ -95,9 +89,9 @@ async function getPictureLinks(req: Request, res: Response) {
 const scopes = ["https://www.googleapis.com/auth/drive"];
 
 const auth = new google.auth.JWT(
-	GOOGLE_DRIVE_CLIENT_EMAIL,
+	CONFIG.GOOGLE_DRIVE_CLIENT_EMAIL,
 	undefined,
-	GOOGLE_PRIVATE_KEY,
+	CONFIG.GOOGLE_PRIVATE_KEY,
 	scopes
 );
 
@@ -108,7 +102,7 @@ async function getAllPhotoLinks() {
 		const linksArray: any = [];
 		// get ids, then put it into links
 		const results = await drive.files.list({
-			q: `'${GOOGLE_IMAGE_FOLDER}' in parents`,
+			q: `'${CONFIG.GOOGLE_IMAGE_FOLDER}' in parents`,
 		});
 		if (results.data.files !== undefined) {
 			// && results.data.files[i].mimeType.indexOf("jpeg") > 0
@@ -142,4 +136,4 @@ async function getGooglePhotoLinks(req: Request, res: Response) {
 		throw error;
 	}
 }
-export {refreshPhotos, getPictureLinks };
+export { refreshPhotos, getPictureLinks };

@@ -14,17 +14,16 @@ import {
 	refreshIqamahTimes,
 } from "./controllers/prayertimesjummahupdate";
 import { refreshCalendarEventsPhotos } from "./controllers/calendar";
-import {MONGODB_URI} from "./config.json";
-import {refreshPhotos} from "./controllers/pictures";
+import CONFIG from "./Config";
+import { refreshPhotos } from "./controllers/pictures";
 
 const app: Express = express();
-const uri = MONGODB_URI || "mongodb://localhost:27017/admin";
+const uri = CONFIG.MONGODB_URI || "mongodb://localhost:27017/admin";
 
 // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 const PORT: string | number = process.env.PORT || 4000;
 
 dotenv.config();
-
 
 app.use(express.json());
 app.use(cors());
@@ -55,7 +54,7 @@ cron.schedule("0 0 0 * * *", async () => {
 // cron call - runs every 10 minutes
 cron.schedule("*/5 * * * *", async () => {
 	await refreshIqamahTimes();
-	await refreshCalendarEventsPhotos();
+	//await refreshCalendarEventsPhotos();
 	console.log(
 		"CRONJOB: Refreshed Posts and Calendar Events Photos, Iqamah Times"
 	);
@@ -64,10 +63,8 @@ cron.schedule("*/5 * * * *", async () => {
 // cron - call every hour
 cron.schedule("0 * * * *", async () => {
 	await refreshPhotos();
-  await refreshPosts();
-	console.log(
-		"CRONJOB: Refreshed Cloudinary Image URLS"
-	);
+	await refreshPosts();
+	console.log("CRONJOB: Refreshed Cloudinary Image URLS");
 });
 
 mongoose.set("strictQuery", true);
@@ -80,11 +77,11 @@ if (uri) {
 		.connect(uri)
 		.then(async () => {
 			//await refreshCalendarEventsPhotos();
-      await refreshPhotos();
+			await refreshPhotos();
 			await refreshIqamahTimes();
 			await refershPrayerTimes();
 			await refreshFood();
-      await refreshToken();
+			await refreshToken();
 			await refreshPosts();
 		})
 		.then(() =>

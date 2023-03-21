@@ -3,11 +3,11 @@ import { Request, Response } from "express";
 import { google } from "googleapis";
 import googleapis from "../../models/googleapis";
 
-import {GOOGLE_PRIVATE_KEY, GOOGLE_CLIENT_EMAIL, GOOGLE_CALENDAR_ID} from "../../config.json";
-
-
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
+let GOOGLE_PRIVATE_KEY;
+let GOOGLE_CLIENT_EMAIL;
+let GOOGLE_CALENDAR_ID;
 
 const jwtClient = new google.auth.JWT(
 	GOOGLE_CLIENT_EMAIL,
