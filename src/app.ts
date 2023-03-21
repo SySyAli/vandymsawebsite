@@ -13,7 +13,7 @@ import {
 	refershPrayerTimes,
 	refreshIqamahTimes,
 } from "./controllers/prayertimesjummahupdate";
-import { refreshCalendarEventsPhotos } from "./controllers/calendar";
+//import { refreshCalendarEventsPhotos } from "./controllers/calendar";
 import CONFIG from "./Config";
 import { refreshPhotos } from "./controllers/pictures";
 
