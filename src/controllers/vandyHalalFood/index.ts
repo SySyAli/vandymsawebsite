@@ -200,7 +200,7 @@ async function scraping(diningHallName: string) {
       information.Lunch.message = "LUNCH HAS NO ITEMS"
     } else {
       const buttons = [];
-      console.log(diningHallName + " LUNCH HAS ITEMS");
+     // console.log(diningHallName + " LUNCH HAS ITEMS");
       information.Lunch.message = "LUNCH HAS ITEMS"
       /* Code that will get table of halal items */
       await page
