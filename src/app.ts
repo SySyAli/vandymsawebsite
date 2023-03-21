@@ -20,6 +20,7 @@ import { refreshPhotos } from "./controllers/pictures";
 
 const app: Express = express();
 const uri = CONFIG.MONGODB_URI || "mongodb://localhost:27017/admin";
+const port = process.env.PORT || 8080;
 
 dotenv.config();
 
@@ -83,7 +84,7 @@ if (uri) {
 			await refreshPosts();
 		})
 		.then(() =>
-			app.listen(process.env.PORT || 4000, async () =>
+			app.listen(port, async () =>
 				console.log(`Server Running`)
 			)
 		)
