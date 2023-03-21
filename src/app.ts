@@ -21,9 +21,6 @@ import { refreshPhotos } from "./controllers/pictures";
 const app: Express = express();
 const uri = CONFIG.MONGODB_URI || "mongodb://localhost:27017/admin";
 
-// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-const PORT: string | number = process.env.PORT || 4000;
-
 dotenv.config();
 
 app.use(express.json());
@@ -86,8 +83,8 @@ if (uri) {
 			await refreshPosts();
 		})
 		.then(() =>
-			app.listen(PORT, async () =>
-				console.log(`Server running on http://localhost:${PORT}`)
+			app.listen(process.env.PORT || 4000, async () =>
+				console.log(`Server Running`)
 			)
 		)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
