@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const dotenv = require("dotenv");
+require("dotenv").config();
 import express, { Express } from "express";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const mongoose = require("mongoose");
-const CONFIG = require("./CONFIG.json");
+//const CONFIG = require("./CONFIG.json");
 import cors from "cors";
 import routes from "./routes";
 import cron from "node-cron";
@@ -18,11 +18,15 @@ import {
 //import { refreshCalendarEventsPhotos } from "./controllers/calendar";
 import { refreshPhotos } from "./controllers/pictures";
 
-const app: Express = express();
-const uri = CONFIG.MONGODB_URI || "mongodb://localhost:27017/admin";
-const port = process.env.PORT || 8080;
+if (process.env.CLOUDINARY_CLOUD_NAME) {
+	console.log("FLY.IO - CLOUDINARY");
+} else {
+	console.log("DOESNT WORK");
+}
 
-dotenv.config();
+const app: Express = express();
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/admin";
+const PORT = parseInt(process.env.PORT || "8080") || 8080;
 
 app.use(express.json());
 app.use(cors());
@@ -37,7 +41,7 @@ app.listen(PORT, () =>
 // cron call - runs at 3 AM everyday
 cron.schedule("0 0 3 * * *", async () => {
 	await refreshToken();
-	await refreshFood();
+	//	await refreshFood();
 	await refershPrayerTimes();
 });
 
@@ -79,14 +83,12 @@ if (uri) {
 			await refreshPhotos();
 			await refreshIqamahTimes();
 			await refershPrayerTimes();
-			await refreshFood();
+			//	await refreshFood();
 			await refreshToken();
 			await refreshPosts();
 		})
 		.then(() =>
-			app.listen(port, async () =>
-				console.log(`Server Running`)
-			)
+			app.listen(PORT, "0.0.0.0", async () => console.log(`Server Running`))
 		)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		.catch((error: any) => {

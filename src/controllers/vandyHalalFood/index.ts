@@ -128,7 +128,14 @@ async function scraping(diningHallName: string) {
       }
     let count: any;
     // to show  page use  {headless: false }
-    const browser = await chromium.launch();
+    const browser = await chromium.launch({
+      args: [
+        '--disable-dev-shm-usage',
+        '--disable-setuid-sandbox',
+        '--no-sandbox'
+      ],
+      chromiumSandbox: false
+    });
     const page = await browser.newPage();
     await page.goto("https://netnutrition.cbord.com/nn-prod/vucampusdining");
 

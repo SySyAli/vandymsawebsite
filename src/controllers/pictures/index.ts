@@ -1,22 +1,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { google } from "googleapis";
 import { Request, Response } from "express";
-import googleapis from "../../models/googleapis";
 import { v2 as cloudinary } from "cloudinary";
-const CONFIG = require("../../CONFIG.json");
+//const CONFIG = require("../../CONFIG.json");
 import PhotoLinks from "../../models/photoLinks";
 
 cloudinary.config({
-	cloud_name: CONFIG.CLOUDINARY_CLOUD_NAME,
-	api_key: CONFIG.CLOUDINARY_API_KEY,
-	api_secret: CONFIG.CLOUDINARY_API_SECRET,
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
 	secure: true,
 });
 
 // NEW METHODS
 async function getImages() {
 	try {
-		const newURLS = [];
+		const newURLS: string[] = [];
 		const promise = new Promise((resolve, reject) => {
 			cloudinary.search
 				.expression("resource_type:image")
@@ -86,7 +84,7 @@ async function getPictureLinks(req: Request, res: Response) {
 		throw error;
 	}
 }
-
+/*
 const scopes = ["https://www.googleapis.com/auth/drive"];
 
 const auth = new google.auth.JWT(
@@ -137,4 +135,5 @@ async function getGooglePhotoLinks(req: Request, res: Response) {
 		throw error;
 	}
 }
+*/
 export { refreshPhotos, getPictureLinks };
