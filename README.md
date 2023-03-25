@@ -1,6 +1,6 @@
 # vandymsawebsite
 
-This repo contains the code for the Vanderbilt Muslim Student Association server. This server is built using TypeScript and provides four main routes for the Vanderbilt Muslim Student Association website. The routes are /getInstagramPosts, /prayerTimes, /getHalalFood, and /getPhotoLinks.
+This repo contains the code for the Vanderbilt Muslim Student Association website's server. This server is built using TypeScript and provides four main routes for the Vanderbilt Muslim Student Association website. The routes are /getInstagramPosts, /prayerTimes, /getHalalFood, and /getPhotoLinks.
 
 ## Installation
 To install the dependencies, run the following command:
