@@ -211,7 +211,10 @@ async function getTodayPrayerTime(req: Request, res: Response) {
 		// Maybe store jummah and iqamah times in front end
 		// Store query parameters in front end
 		const times: PrayerTime[] = await PrayerTimes.find();
-		const date = new Date();
+		const oldDate = new Date();
+		const date = new Date(oldDate.toLocaleString('en-US', { timeZone: 'America/Chicago' }));
+		console.log(date.toString())
+		console.log(oldDate.toString())
 		// Annex Coordinates: (36.14479431053963, -86.80420024114342)
 		const parameters = await {
 			latitude: times[0].latitude,
@@ -246,6 +249,7 @@ async function getTodayPrayerTime(req: Request, res: Response) {
 		} else {
 			currentTimeStamp += ":" + date.getMinutes();
 		}
+		console.log(currentTimeStamp);
 		//console.log(date.getHours())
 		// East Coast time
 
